@@ -1,2 +1,2 @@
-# Beajo
-🚛 배송조회서비스 '배조'
+# iDelivery
+🚛 배송조회서비스 'iDelivery'
