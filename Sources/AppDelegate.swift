@@ -1,7 +1,17 @@
 import UIKit
+import Swinject
+import Then
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    let container: Container = {
+        let container = Container()
+        container.register(ViewController.self) { _ in
+            return ViewController()
+        }
+        return container
+    }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

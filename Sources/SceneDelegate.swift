@@ -1,8 +1,10 @@
 import UIKit
+import Swinject
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    let appDelegate = UIApplication.shared.delegate as? AppDelegate
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -14,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScence)
         window?.windowScene = windowScence
 
-        window?.rootViewController = ViewController()
+        window?.rootViewController = appDelegate?.container.resolve(ViewController.self)
         window?.makeKeyAndVisible()
     }
 
