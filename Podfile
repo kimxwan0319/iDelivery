@@ -7,6 +7,7 @@ target 'iDelivery' do
 
   # Pods for iDelivery
 
+  pod 'ReactorKit', '~> 3.0.0'
   pod 'Moya/RxSwift', '~> 15.0'
   pod 'RxSwift', '~> 6.2.0'
   pod 'RxTexture2', '1.3.0'
