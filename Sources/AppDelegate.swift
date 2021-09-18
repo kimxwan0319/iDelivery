@@ -1,4 +1,6 @@
 import UIKit
+
+import AsyncDisplayKit
 import Swinject
 import Then
 
@@ -7,8 +9,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let container: Container = {
         let container = Container()
-        container.register(ViewController.self) { _ in
-            return ViewController()
+        container.register(PostListNodeController.self) { _ in
+            PostListNodeController()
+        }
+        container.register(UINavigationController.self) { resolver in
+            UINavigationController(
+                rootViewController: resolver.resolve(PostListNodeController.self)!
+            ).then {
+                $0.navigationBar.prefersLargeTitles = true
+            }
         }
         return container
     }()
