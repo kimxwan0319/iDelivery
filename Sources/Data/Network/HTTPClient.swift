@@ -15,7 +15,7 @@ class HTTPClient {
 
     private init() {}
 
-    public func networking<T: Codable>(api: DeliveryTrackerAPI, model networkModel: T.Type) -> Single<T> {
+    public func networking<T: Decodable>(api: DeliveryTrackerAPI, model networkModel: T.Type) -> Single<T> {
         return provider.rx.request(api).map(T.self)
     }
 }
