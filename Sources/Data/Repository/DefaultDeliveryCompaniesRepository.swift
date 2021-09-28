@@ -11,15 +11,11 @@ import RxSwift
 
 class DefaultDeliveryCompaniesRepository: DeliveryCompaniesRepository {
     func getDeliveryCompanyList() -> Single<[DeliveryCompany]> {
-        return Single<[DeliveryCompany]>.create { single in
-            return HTTPClient.shared.networking(
-                api: .getDeliveryCompanyList,
-                model: [DeliveryCompanyDTO].self)
-                .subscribe(onSuccess: { deliveryCompanyDTO in
-                    return single(.success(deliveryCompanyDTO.map{ $0.toDomain() }))
-                }, onFailure: { error in
-                    return single(.failure(error))
-                })
+        HTTPClient.shared.networking(
+            api: .getDeliveryCompanyList,
+            model: [DeliveryCompanyDTO].self
+        ).map {
+            $0.map{ $0.toDomain() }
         }
     }
 }
