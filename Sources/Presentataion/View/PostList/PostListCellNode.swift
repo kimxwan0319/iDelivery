@@ -55,11 +55,11 @@ class PostListCellNode: ASCellNode {
     // MARK: Layout
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         return ASInsetLayoutSpec(
-          insets: UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 15),
-          child: self.contentLayoutSpec()
+            insets: UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 15),
+            child: self.contentLayoutSpec()
         )
-      }
-    
+    }
+
     private func contentLayoutSpec() -> ASLayoutSpec {
         return ASStackLayoutSpec(
             direction: .horizontal,
