@@ -24,4 +24,10 @@ class DefaultUserParcelsRepository: UserParcelsRepository {
             return Disposables.create()
         }
     }
+    func saveUserParcel(parcel: UserParcel) {
+        CoreData.shared.performBackgroundTask { context in
+            _ = parcel.toEntity(context)
+            do { try context.save() } catch { print(error.localizedDescription) }
+        }
+    }
 }

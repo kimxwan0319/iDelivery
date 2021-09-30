@@ -11,4 +11,5 @@ import RxSwift
 
 protocol UserParcelsRepository {
     func getUserParcels() -> Single<[UserParcel]>
+    func saveUserParcel(parcel: UserParcel)
 }
