@@ -9,6 +9,16 @@
 import Foundation
 import CoreData
 
+extension UserParcel {
+    func toEntity(_ context: NSManagedObjectContext) -> UserParcelEntity {
+        let entity: UserParcelEntity = .init(context: context)
+        entity.trackingNumber = trackingNumber
+        entity.deliveryCompanyId = deliveryCompanyId
+        entity.name = name
+        entity.state = state
+        return entity
+    }
+}
 extension UserParcelEntity {
     func toDomain() -> UserParcel {
         return .init(
