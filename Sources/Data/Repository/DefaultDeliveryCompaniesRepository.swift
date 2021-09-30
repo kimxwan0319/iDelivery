@@ -10,9 +10,9 @@ import Foundation
 import RxSwift
 
 class DefaultDeliveryCompaniesRepository: DeliveryCompaniesRepository {
-    func getDeliveryCompanyList() -> Single<[DeliveryCompany]> {
+    func fetchDeliveryCompanyList() -> Single<[DeliveryCompany]> {
         HTTPClient.shared.networking(
-            api: .getDeliveryCompanyList,
+            api: .fetchDeliveryCompanyList,
             model: [DeliveryCompanyDTO].self
         ).map {
             $0.map{ $0.toDomain() }

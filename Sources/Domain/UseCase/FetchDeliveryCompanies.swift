@@ -18,6 +18,6 @@ class FetchDeliveryCompanies {
     }
 
     func execute() -> Single<[DeliveryCompany]> {
-        return deliveryCompaniesRepository.getDeliveryCompanyList()
+        return deliveryCompaniesRepository.fetchDeliveryCompanyList()
     }
 }

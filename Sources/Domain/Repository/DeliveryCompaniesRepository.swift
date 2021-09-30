@@ -10,5 +10,5 @@ import Foundation
 import RxSwift
 
 protocol DeliveryCompaniesRepository {
-    func getDeliveryCompanyList() -> Single<[DeliveryCompany]>
+    func fetchDeliveryCompanyList() -> Single<[DeliveryCompany]>
 }
