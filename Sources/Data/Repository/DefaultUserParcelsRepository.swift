@@ -30,4 +30,10 @@ class DefaultUserParcelsRepository: UserParcelsRepository {
             do { try context.save() } catch { print(error.localizedDescription) }
         }
     }
+    func deleteUserParcel(parcel: UserParcel) {
+        CoreData.shared.performBackgroundTask { context in
+            context.delete(parcel.toEntity(context))
+            do { try context.save() } catch { print(error.localizedDescription) }
+        }
+    }
 }
