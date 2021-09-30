@@ -1,5 +1,5 @@
 //
-//  SaveParcelListUseCase.swift
+//  SaveParcelUseCase.swift
 //  iDelivery
 //
 //  Created by 김수완 on 2021/09/30.
@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class SaveParcelListUseCase {
+class SaveParcelUseCase {
 
     private let userParcelsRepository : UserParcelsRepository
 
