@@ -1,5 +1,5 @@
 //
-//  PostListNodeController.swift
+//  ParcelListNodeController.swift
 //  iDelivery
 //
 //  Created by 김수완 on 2021/09/16.
@@ -8,7 +8,7 @@
 
 import AsyncDisplayKit
 
-final class PostListNodeController: ASDKViewController<ASTableNode> {
+final class ParcelListNodeController: ASDKViewController<ASTableNode> {
     private let addPostButtonNode = UIBarButtonItem().then {
         $0.image = UIImage(systemName: "plus")
     }
@@ -28,7 +28,7 @@ final class PostListNodeController: ASDKViewController<ASTableNode> {
     }
 }
 
-extension PostListNodeController: ASTableDataSource {
+extension ParcelListNodeController: ASTableDataSource {
     func numberOfSections(in tableNode: ASTableNode) -> Int {
         return 1
     }

@@ -1,5 +1,5 @@
 //
-//  PostListCellNode.swift
+//  ParcelListCellNode.swift
 //  iDelivery
 //
 //  Created by 김수완 on 2021/09/17.
@@ -9,7 +9,7 @@
 import AsyncDisplayKit
 import Then
 
-class PostListCellNode: ASCellNode {
+class ParcelListCellNode: ASCellNode {
 
     // MARK: UI
     private let stateTextNode = ASTextNode().then {

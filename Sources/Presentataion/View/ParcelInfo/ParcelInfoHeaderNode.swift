@@ -1,5 +1,5 @@
 //
-//  PostInfoHeaderNode.swift
+//  ParcelInfoHeaderNode.swift
 //  iDelivery
 //
 //  Created by 김수완 on 2021/09/20.
@@ -9,7 +9,7 @@
 import AsyncDisplayKit
 import Then
 
-class PostInfoHeaderNode: ASDisplayNode {
+class ParcelInfoHeaderNode: ASDisplayNode {
 
     // MARK: UI
     private let stateProgressNode = UIProgressView()

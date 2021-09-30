@@ -1,5 +1,5 @@
 //
-//  PostInfoNodeController.swift
+//  ParcelInfoNodeController.swift
 //  iDelivery
 //
 //  Created by 김수완 on 2021/09/20.
@@ -9,7 +9,7 @@
 import AsyncDisplayKit
 import Then
 
-class PostInfoNodeController: ASDKViewController<ASTableNode> {
+class ParcelInfoNodeController: ASDKViewController<ASTableNode> {
     var items = ["", "", ""]
     
     override init() {
@@ -26,7 +26,7 @@ class PostInfoNodeController: ASDKViewController<ASTableNode> {
     }
 }
 
-extension PostInfoNodeController: ASTableDataSource {
+extension ParcelInfoNodeController: ASTableDataSource {
     func numberOfSections(in tableNode: ASTableNode) -> Int {
         return 1
     }
