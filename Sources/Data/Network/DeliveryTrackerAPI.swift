@@ -9,7 +9,7 @@
 import Moya
 
 enum DeliveryTrackerAPI {
-    case getDeliveryCompanyList
+    case fetchDeliveryCompanyList
     case trackingPost(deliveryCompanyId: String, trackingNumber: Int)
 }
 
@@ -20,7 +20,7 @@ extension DeliveryTrackerAPI: TargetType {
     
     var path: String {
         switch self {
-        case .getDeliveryCompanyList:
+        case .fetchDeliveryCompanyList:
             return "/carriers"
         case .trackingPost(let deliveryCompanyId, let trackingNumber):
             return "/carriers/\(deliveryCompanyId)/tracks/\(trackingNumber)"

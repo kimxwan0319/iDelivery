@@ -11,7 +11,7 @@ import RxSwift
 import CoreData
 
 class DefaultUserParcelsRepository: UserParcelsRepository {
-    func getUserParcels() -> Single<[UserParcel]> {
+    func fetchUserParcels() -> Single<[UserParcel]> {
         return Single<[UserParcel]>.create{ single in
             CoreData.shared.performBackgroundTask { context in
                 do {

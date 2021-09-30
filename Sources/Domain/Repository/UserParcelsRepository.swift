@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 protocol UserParcelsRepository {
-    func getUserParcels() -> Single<[UserParcel]>
+    func fetchUserParcels() -> Single<[UserParcel]>
     func saveUserParcel(parcel: UserParcel)
     func deleteUserParcel(parcel: UserParcel)
 }
