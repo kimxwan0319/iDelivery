@@ -12,7 +12,7 @@ import RxSwift
 class FetchParcelListUseCase {
 
     private let userParcelsRepository : UserParcelsRepository
-    
+
     init(userParcelsRepository: UserParcelsRepository) {
         self.userParcelsRepository = userParcelsRepository
     }
