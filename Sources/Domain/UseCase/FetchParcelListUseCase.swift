@@ -11,11 +11,7 @@ import RxSwift
 
 class FetchParcelListUseCase {
 
-    private let userParcelsRepository : UserParcelsRepository
-
-    init(userParcelsRepository: UserParcelsRepository) {
-        self.userParcelsRepository = userParcelsRepository
-    }
+    @Inject private var userParcelsRepository : UserParcelsRepository
 
     func execute() -> Single<[UserParcel]> {
         return userParcelsRepository.fetchUserParcels()

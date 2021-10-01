@@ -11,11 +11,7 @@ import RxSwift
 
 class FetchDeliveryCompanies {
 
-    private let deliveryCompaniesRepository : DeliveryCompaniesRepository
-
-    init(deliveryCompaniesRepository: DeliveryCompaniesRepository) {
-        self.deliveryCompaniesRepository = deliveryCompaniesRepository
-    }
+    @Inject private var deliveryCompaniesRepository : DeliveryCompaniesRepository
 
     func execute() -> Single<[DeliveryCompany]> {
         return deliveryCompaniesRepository.fetchDeliveryCompanyList()

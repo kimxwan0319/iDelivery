@@ -11,11 +11,7 @@ import RxSwift
 
 class SaveParcelUseCase {
 
-    private let userParcelsRepository : UserParcelsRepository
-
-    init(userParcelsRepository: UserParcelsRepository) {
-        self.userParcelsRepository = userParcelsRepository
-    }
+    @Inject private var userParcelsRepository : UserParcelsRepository
 
     func execute(userParcel: UserParcel) {
         return userParcelsRepository.saveUserParcel(parcel: userParcel)
