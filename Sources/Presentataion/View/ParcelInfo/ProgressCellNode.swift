@@ -75,7 +75,7 @@ class ProgressCellNode: ASCellNode {
             child: self.contentLayoutSpec()
         )
     }
-    
+
     private func contentLayoutSpec() -> ASLayoutSpec {
         return ASStackLayoutSpec(
             direction: .horizontal,

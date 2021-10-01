@@ -22,7 +22,7 @@ class ParcelInfoHeaderNode: ASDisplayNode {
             ]
         )
     }
-    private let TitleTextNode = ASTextNode().then {
+    private let titleTextNode = ASTextNode().then {
         $0.attributedText = NSAttributedString(
             string: " ",
             attributes: [
@@ -40,7 +40,7 @@ class ParcelInfoHeaderNode: ASDisplayNode {
             ]
         )
     }
-    
+
     // MARK: Initializing
     override init() {
         super.init()
@@ -49,10 +49,10 @@ class ParcelInfoHeaderNode: ASDisplayNode {
         self.automaticallyRelayoutOnSafeAreaChanges = true
         self.backgroundColor = .cyan
     }
-    
+
     // MARK: Layout
     override func layoutSpecThatFits(_ constraintedSize: ASSizeRange) -> ASLayoutSpec {
         return ASLayoutSpec()
     }
-    
+
 }

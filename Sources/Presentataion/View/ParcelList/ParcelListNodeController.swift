@@ -12,9 +12,9 @@ final class ParcelListNodeController: ASDKViewController<ASTableNode> {
     private let addPostButtonNode = UIBarButtonItem().then {
         $0.image = UIImage(systemName: "plus")
     }
-    
+
     var items = ["", "", ""]
-    
+
     override init() {
         super.init(node: ASTableNode(style: .plain))
         self.title = "배송목록"
@@ -22,7 +22,7 @@ final class ParcelListNodeController: ASDKViewController<ASTableNode> {
         self.node.backgroundColor = .systemBackground
         self.node.dataSource = self
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -37,7 +37,7 @@ extension ParcelListNodeController: ASTableDataSource {
     }
     func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
         return {
-            return PostListCellNode(state: "배송중", carrier: "CJ대한통운", number: "123412341234", title: "신발")
+            return ParcelListCellNode(state: "배송중", carrier: "CJ대한통운", number: "123412341234", title: "신발")
         }
     }
 }

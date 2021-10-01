@@ -12,10 +12,10 @@ import CoreData
 
 class DefaultUserParcelsRepository: UserParcelsRepository {
     func fetchUserParcels() -> Single<[UserParcel]> {
-        return Single<[UserParcel]>.create{ single in
+        return Single<[UserParcel]>.create { single in
             CoreData.shared.performBackgroundTask { context in
                 do {
-                    let result = try context.fetch(UserParcelEntity.fetchRequest()).map{ $0.toDomain() }
+                    let result = try context.fetch(UserParcelEntity.fetchRequest()).map { $0.toDomain() }
                     single(.success(result))
                 } catch {
                     single(.failure(error))

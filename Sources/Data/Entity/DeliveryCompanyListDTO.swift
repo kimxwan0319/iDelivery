@@ -10,8 +10,8 @@ import Foundation
 
 // MARK: - Data Transfer Object
 struct DeliveryCompanyDTO: Decodable {
-    let id : String
-    let name : String
+    let id: String
+    let name: String
     let tel: String
 }
 
@@ -19,8 +19,8 @@ struct DeliveryCompanyDTO: Decodable {
 extension DeliveryCompanyDTO {
     func toDomain() -> DeliveryCompany {
         return .init(
-            id: id,
-            name: name
+            companyId: id,
+            companyName: name
         )
     }
 }

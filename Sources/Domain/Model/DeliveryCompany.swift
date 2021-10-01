@@ -9,6 +9,6 @@
 import Foundation
 
 struct DeliveryCompany {
-    let id : String
-    let name : String
+    let companyId: String
+    let companyName: String
 }

@@ -15,7 +15,7 @@ class DefaultDeliveryCompaniesRepository: DeliveryCompaniesRepository {
             api: .fetchDeliveryCompanyList,
             model: [DeliveryCompanyDTO].self
         ).map {
-            $0.map{ $0.toDomain() }
+            $0.map { $0.toDomain() }
         }
     }
 }

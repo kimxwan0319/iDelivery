@@ -17,7 +17,7 @@ extension DeliveryTrackerAPI: TargetType {
     var baseURL: URL {
         return URL(string: "https://apis.tracker.delivery")!
     }
-    
+
     var path: String {
         switch self {
         case .fetchDeliveryCompanyList:
@@ -26,16 +26,16 @@ extension DeliveryTrackerAPI: TargetType {
             return "/carriers/\(deliveryCompanyId)/tracks/\(trackingNumber)"
         }
     }
-    
+
     var method: Method {
         return .get
     }
-    
+
     var task: Task {
         return .requestPlain
     }
-    
-    var headers: [String : String]? {
+
+    var headers: [String: String]? {
         return nil
     }
 }

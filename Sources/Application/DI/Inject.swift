@@ -11,7 +11,7 @@ import Swinject
 @propertyWrapper
 public struct Inject<Value> {
     public private(set) var wrappedValue: Value
-    
+
     public init() {
         wrappedValue = AppDelegate.container.resolve(Value.self)!
     }

@@ -30,7 +30,7 @@ class ParcelListCellNode: ASCellNode {
             ]
         )
     }
-    private let TitleTextNode = ASTextNode().then {
+    private let titleTextNode = ASTextNode().then {
         $0.attributedText = NSAttributedString(
             string: " ",
             attributes: [
@@ -49,7 +49,7 @@ class ParcelListCellNode: ASCellNode {
 
         self.stateTextNode.setString(state)
         self.carrierTextNode.setString(carrier+" "+number)
-        self.TitleTextNode.setString(title)
+        self.titleTextNode.setString(title)
     }
 
     // MARK: Layout
@@ -75,7 +75,7 @@ class ParcelListCellNode: ASCellNode {
                     alignItems: .start,
                     children: [
                         self.carrierTextNode,
-                        self.TitleTextNode
+                        self.titleTextNode
                     ]
                 )
             ]
