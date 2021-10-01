@@ -5,3 +5,4 @@ disabled_rules:
 excluded:
   - Pods
   - Supporting Files
+  - Sources/Data/Entity
