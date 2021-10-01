@@ -23,6 +23,11 @@ let project = Project(
             ],
             dependencies: [
                 .cocoapods(path: ".")
+            ],
+            coreDataModels: [
+                CoreDataModel(
+                    Path("Sources/Data/CoreData/CoreData.xcdatamodeld"),
+                    currentVersion: nil)
             ]
         )
     ]
