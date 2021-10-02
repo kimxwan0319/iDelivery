@@ -7,14 +7,25 @@ target 'iDelivery' do
 
   # Pods for iDelivery
 
+
+  # Architecture
   pod 'ReactorKit', '~> 3.1.0'
-  pod 'Moya/RxSwift', '~> 15.0'
-  pod 'RxSwift', '~> 6.2.0'
-  pod 'RxTexture2', '1.3.0'
-  pod 'SwiftLint', '~> 0.44.0'
+
+  # UI
   pod 'Texture', '~> 3.0.0'
-  pod 'Then', '~> 2.7.0'
-  pod 'Swinject', '~> 2.8.0'
+
+  # Rx
+  pod 'RxSwift', '~> 6.2.0'
+  pod 'Moya/RxSwift', '~> 15.0'
+  pod 'RxTexture2', '1.3.0'
   pod 'RxFlow', '~> 2.12.0'
+
+  # D.I.
+  pod 'Swinject', '~> 2.8.0'
+
+  # E.C.T
+  pod 'Then', '~> 2.7.0'
+  pod 'SwiftLint', '~> 0.44.0'
+
 
 end
