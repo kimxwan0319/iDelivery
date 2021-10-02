@@ -26,6 +26,9 @@ PODS:
   - RxCocoa (6.2.0):
     - RxRelay (= 6.2.0)
     - RxSwift (= 6.2.0)
+  - RxFlow (2.12.4):
+    - RxCocoa (>= 6.0.0)
+    - RxSwift (>= 6.0.0)
   - RxRelay (6.2.0):
     - RxSwift (= 6.2.0)
   - RxSwift (6.2.0)
@@ -61,6 +64,7 @@ PODS:
 DEPENDENCIES:
   - Moya/RxSwift (~> 15.0)
   - ReactorKit (~> 3.1.0)
+  - RxFlow (~> 2.12.0)
   - RxSwift (~> 6.2.0)
   - RxTexture2 (= 1.3.0)
   - SwiftLint (~> 0.44.0)
@@ -77,6 +81,7 @@ SPEC REPOS:
     - PINRemoteImage
     - ReactorKit
     - RxCocoa
+    - RxFlow
     - RxRelay
     - RxSwift
     - RxTexture2
@@ -94,6 +99,7 @@ SPEC CHECKSUMS:
   PINRemoteImage: f1295b29f8c5e640e25335a1b2bd9d805171bd01
   ReactorKit: a06dd2a5c9339287aedf3dc821cfab6347eca106
   RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
+  RxFlow: 03a73c83fb8f183107074b40ab2544c668583f73
   RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
   RxTexture2: afc37076fc7ac380642d569533ed858d296732fe
@@ -103,6 +109,6 @@ SPEC CHECKSUMS:
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: c1e0dd0382e9f4208cb1348bab0ef1c47c172ad8
+PODFILE CHECKSUM: 380e807bd4f735cfb8a6622bfe69f1fa6ed27f70
 
 COCOAPODS: 1.10.2

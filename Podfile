@@ -15,5 +15,6 @@ target 'iDelivery' do
   pod 'Texture', '~> 3.0.0'
   pod 'Then', '~> 2.7.0'
   pod 'Swinject', '~> 2.8.0'
+  pod 'RxFlow', '~> 2.12.0'
 
 end
