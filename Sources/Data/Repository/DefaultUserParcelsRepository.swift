@@ -11,8 +11,8 @@ import RxSwift
 import CoreData
 
 class DefaultUserParcelsRepository: UserParcelsRepository {
-    func fetchUserParcels() -> Single<[UserParcel]> {
-        return Single<[UserParcel]>.create { single in
+    func fetchUserParcels() -> Single<[Parcel]> {
+        return Single<[Parcel]>.create { single in
             CoreData.shared.performBackgroundTask { context in
                 do {
                     let result = try context.fetch(UserParcelEntity.fetchRequest()).map { $0.toDomain() }
@@ -24,13 +24,13 @@ class DefaultUserParcelsRepository: UserParcelsRepository {
             return Disposables.create()
         }
     }
-    func saveUserParcel(parcel: UserParcel) {
+    func saveUserParcel(parcel: Parcel) {
         CoreData.shared.performBackgroundTask { context in
             _ = parcel.toEntity(context)
             do { try context.save() } catch { print(error.localizedDescription) }
         }
     }
-    func deleteUserParcel(parcel: UserParcel) {
+    func deleteUserParcel(parcel: Parcel) {
         CoreData.shared.performBackgroundTask { context in
             context.delete(parcel.toEntity(context))
             do { try context.save() } catch { print(error.localizedDescription) }

@@ -1,5 +1,5 @@
 //
-//  UserParcel.swift
+//  Parcel.swift
 //  iDelivery
 //
 //  Created by 김수완 on 2021/09/28.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserParcel {
+struct Parcel {
     let trackingNumber: String
     let deliveryCompanyId: String
     let name: String

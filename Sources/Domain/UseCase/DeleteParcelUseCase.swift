@@ -13,7 +13,7 @@ class DeleteParcelUseCase {
 
     @Inject private var userParcelsRepository : UserParcelsRepository
 
-    func execute(userParcel: UserParcel) {
+    func execute(userParcel: Parcel) {
         return userParcelsRepository.deleteUserParcel(parcel: userParcel)
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-extension UserParcel {
+extension Parcel {
     func toEntity(_ context: NSManagedObjectContext) -> UserParcelEntity {
         let entity: UserParcelEntity = .init(context: context)
         entity.trackingNumber = trackingNumber
@@ -20,7 +20,7 @@ extension UserParcel {
     }
 }
 extension UserParcelEntity {
-    func toDomain() -> UserParcel {
+    func toDomain() -> Parcel {
         return .init(
             trackingNumber: trackingNumber ?? "",
             deliveryCompanyId: deliveryCompanyId ?? "",
