@@ -13,7 +13,7 @@ class SaveParcelUseCase {
 
     @Inject private var userParcelsRepository : UserParcelsRepository
 
-    func execute(userParcel: UserParcel) {
+    func execute(userParcel: Parcel) {
         return userParcelsRepository.saveUserParcel(parcel: userParcel)
     }
 }
