@@ -7,8 +7,15 @@
 //
 
 import AsyncDisplayKit
+import RxSwift
+import RxCocoa
+import RxFlow
 
-final class ParcelListNodeController: ASDKViewController<ASTableNode> {
+final class ParcelListNodeController: ASDKViewController<ASTableNode>, Stepper {
+
+    let disposeBag = DisposeBag()
+    var steps = PublishRelay<Step>()
+
     private let addPostButtonNode = UIBarButtonItem().then {
         $0.image = UIImage(systemName: "plus")
     }
