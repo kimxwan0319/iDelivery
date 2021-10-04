@@ -1,5 +1,5 @@
 //
-//  FetchDeliveryCompanies.swift
+//  FetchDeliveryCompaniesUseCase.swift
 //  iDelivery
 //
 //  Created by 김수완 on 2021/09/30.
@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class FetchDeliveryCompanies {
+class FetchDeliveryCompaniesUseCase {
 
     @Inject private var deliveryCompaniesRepository: DeliveryCompaniesRepository
 
