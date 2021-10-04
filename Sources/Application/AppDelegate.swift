@@ -1,8 +1,5 @@
 import UIKit
-
-import AsyncDisplayKit
 import Swinject
-import Then
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

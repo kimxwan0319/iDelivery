@@ -9,7 +9,6 @@
 import Swinject
 
 extension Container {
-
     func registerDependencies() {
         registerRepositories()
         registerUseCases()
@@ -34,6 +33,6 @@ extension Container {
 
     fileprivate func registerNodeControllers() {
         self.register(ParcelListNodeController.self) { _ in ParcelListNodeController() }
-        self.register(ParcelInfoNodeController.self) { _ in ParcelInfoNodeController() }
+        self.register(ParcelDetailNodeController.self) { _ in ParcelDetailNodeController() }
     }
 }
