@@ -9,13 +9,15 @@
 import Foundation
 
 // MARK: - Data Transfer Object
+
 struct DeliveryCompanyDTO: Decodable {
     let id: String
     let name: String
-    let tel: String
+    let tel: String?
 }
 
 // MARK: - Mappings to Domain
+
 extension DeliveryCompanyDTO {
     func toDomain() -> DeliveryCompany {
         return .init(

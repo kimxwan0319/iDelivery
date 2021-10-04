@@ -9,6 +9,8 @@
 import Foundation
 import CoreData
 
+// MARK: - Data Transfer Object
+
 extension Parcel {
     func toEntity(_ context: NSManagedObjectContext) -> UserParcelEntity {
         let entity: UserParcelEntity = .init(context: context)
@@ -19,6 +21,9 @@ extension Parcel {
         return entity
     }
 }
+
+// MARK: - Mappings to Domain
+
 extension UserParcelEntity {
     func toDomain() -> Parcel {
         return .init(
