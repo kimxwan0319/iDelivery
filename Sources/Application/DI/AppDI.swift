@@ -19,6 +19,7 @@ extension Container {
     fileprivate func registerRepositories() {
         self.register(UserParcelsRepository.self) { _ in DefaultUserParcelsRepository() }
         self.register(DeliveryCompaniesRepository.self) { _ in DefaultDeliveryCompaniesRepository() }
+        self.register(ParcelInformationRepository.self) { _ in DefaultParcelInformationRepository() }
     }
 
     fileprivate func registerUseCases() {
@@ -26,6 +27,8 @@ extension Container {
         self.register(SaveParcelUseCase.self) { _ in SaveParcelUseCase() }
         self.register(DeleteParcelUseCase.self) { _ in DeleteParcelUseCase() }
         self.register(FetchParcelListUseCase.self) { _ in FetchParcelListUseCase() }
+        self.register(FetchParcelInformationUseCase.self) { _ in FetchParcelInformationUseCase() }
+        self.register(CheckParcelStateUseCase.self) { _ in CheckParcelStateUseCase() }
     }
 
     fileprivate func registerReactors() {
