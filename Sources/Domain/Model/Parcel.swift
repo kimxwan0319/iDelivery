@@ -12,5 +12,5 @@ struct Parcel {
     let trackingNumber: String
     let deliveryCompanyId: String
     let name: String
-    let state: String
+    let state: ParcelState
 }
