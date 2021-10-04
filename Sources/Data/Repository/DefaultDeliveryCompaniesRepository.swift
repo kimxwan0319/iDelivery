@@ -13,7 +13,7 @@ class DefaultDeliveryCompaniesRepository: DeliveryCompaniesRepository {
     func fetchDeliveryCompanyList() -> Single<[DeliveryCompany]> {
         HTTPClient.shared.networking(
             api: .fetchDeliveryCompanyList,
-            model: [DeliveryCompanyDTO].self
+            dto: [DeliveryCompanyDTO].self
         ).map {
             $0.map { $0.toDomain() }
         }
