@@ -14,7 +14,7 @@ class CheckParcelStateUseCase {
     @Inject private var parcelInformationRepository: ParcelInformationRepository
 
     func excute(deliveryCompanyId: String, trackingNumber: String) -> Single<ParcelState> {
-        parcelInformationRepository.fetchParcelInfo(
+        return parcelInformationRepository.fetchParcelInfo(
             deliveryCompanyId: deliveryCompanyId,
             trackingNumber: trackingNumber
         ).map { $0.state }
