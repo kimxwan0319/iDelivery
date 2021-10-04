@@ -11,7 +11,7 @@ import RxSwift
 
 class FetchDeliveryCompanies {
 
-    @Inject private var deliveryCompaniesRepository : DeliveryCompaniesRepository
+    @Inject private var deliveryCompaniesRepository: DeliveryCompaniesRepository
 
     func execute() -> Single<[DeliveryCompany]> {
         return deliveryCompaniesRepository.fetchDeliveryCompanyList()

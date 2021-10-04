@@ -11,7 +11,7 @@ import RxSwift
 
 class SaveParcelUseCase {
 
-    @Inject private var userParcelsRepository : UserParcelsRepository
+    @Inject private var userParcelsRepository: UserParcelsRepository
 
     func execute(userParcel: Parcel) {
         return userParcelsRepository.saveUserParcel(parcel: userParcel)
