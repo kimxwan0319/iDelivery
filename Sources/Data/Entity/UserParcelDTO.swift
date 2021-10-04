@@ -17,7 +17,7 @@ extension Parcel {
         entity.trackingNumber = trackingNumber
         entity.deliveryCompanyId = deliveryCompanyId
         entity.name = name
-        entity.state = state
+        entity.state = state.rawValue
         return entity
     }
 }
@@ -27,10 +27,10 @@ extension Parcel {
 extension UserParcelEntity {
     func toDomain() -> Parcel {
         return .init(
-            trackingNumber: trackingNumber ?? "",
-            deliveryCompanyId: deliveryCompanyId ?? "",
-            name: name ?? "",
-            state: state ?? ""
+            trackingNumber: trackingNumber!,
+            deliveryCompanyId: deliveryCompanyId!,
+            name: name!,
+            state: ParcelState(rawValue: state!)!
         )
     }
 }
