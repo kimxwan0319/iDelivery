@@ -32,7 +32,10 @@ class ParcelListFlow: Flow {
     private func navigateToParcelListScreen() -> FlowContributors {
         @Inject var nodeController: ParcelListNodeController
         self.rootViewController.setViewControllers([nodeController], animated: true)
-        return .one(flowContributor: .contribute(withNext: nodeController))
+        return .one(flowContributor: .contribute(
+            withNextPresentable: nodeController,
+            withNextStepper: nodeController.reactor!
+        ))
     }
     private func navigateToParcelInfoScreen(parcel: Parcel) -> FlowContributors {
         return .none
