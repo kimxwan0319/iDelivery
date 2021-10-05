@@ -6,15 +6,17 @@
 //  Copyright © 2021 com.kimxwan0319. All rights reserved.
 //
 
+import ReactorKit
 import AsyncDisplayKit
 import RxSwift
 import RxCocoa
 import RxFlow
 
-final class ParcelListNodeController: ASDKViewController<ASTableNode>, Stepper {
+final class ParcelListNodeController: ASDKViewController<ASTableNode>, View {
 
-    let disposeBag = DisposeBag()
-    var steps = PublishRelay<Step>()
+    typealias Reactor = ParcelListReactor
+
+    var disposeBag = DisposeBag()
 
     private let addPostButtonNode = UIBarButtonItem().then {
         $0.image = UIImage(systemName: "plus")
@@ -32,6 +34,9 @@ final class ParcelListNodeController: ASDKViewController<ASTableNode>, Stepper {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func bind(reactor: Reactor) {
     }
 }
 
