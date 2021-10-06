@@ -28,4 +28,11 @@ target 'iDelivery' do
   pod 'SwiftLint', '~> 0.44.0'
 
 
+  target 'iDeliveryTests' do
+    inherit! :search_paths
+    # Pods for testing
+
+    pod	'Quick'
+    pod 'Nimble'
+  end
 end
