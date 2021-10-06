@@ -21,7 +21,6 @@ PODS:
   - PINRemoteImage/PINCache (3.0.3):
     - PINCache (~> 3.0.3)
     - PINRemoteImage/Core
-  - Quick (4.0.0)
   - ReactorKit (3.1.0):
     - RxSwift (~> 6.0)
     - WeakMapTable (~> 1.1)
@@ -66,7 +65,6 @@ PODS:
 DEPENDENCIES:
   - Moya/RxSwift (~> 15.0)
   - Nimble
-  - Quick
   - ReactorKit (~> 3.1.0)
   - RxFlow (~> 2.12.0)
   - RxSwift (~> 6.2.0)
@@ -84,7 +82,6 @@ SPEC REPOS:
     - PINCache
     - PINOperation
     - PINRemoteImage
-    - Quick
     - ReactorKit
     - RxCocoa
     - RxFlow
@@ -104,7 +101,6 @@ SPEC CHECKSUMS:
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
   PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
   PINRemoteImage: f1295b29f8c5e640e25335a1b2bd9d805171bd01
-  Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
   ReactorKit: a06dd2a5c9339287aedf3dc821cfab6347eca106
   RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
   RxFlow: 03a73c83fb8f183107074b40ab2544c668583f73
@@ -117,6 +113,6 @@ SPEC CHECKSUMS:
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 3ad032c179eb862a8367fc17d1d25b946faf8753
+PODFILE CHECKSUM: d80176f65056cc929865d835ffaebca65c3e1526
 
 COCOAPODS: 1.10.2
