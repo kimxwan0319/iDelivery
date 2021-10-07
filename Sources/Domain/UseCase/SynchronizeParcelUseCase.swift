@@ -19,8 +19,8 @@ class SynchronizeParcelUseCase {
             trackingNumber: parcel.trackingNumber
         ).map {
             Parcel(
-                trackingNumber: parcel.trackingNumber,
                 deliveryCompanyId: parcel.deliveryCompanyId,
+                trackingNumber: parcel.trackingNumber,
                 name: parcel.name,
                 state: $0.state
             )

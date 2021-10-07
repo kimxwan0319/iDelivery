@@ -27,8 +27,8 @@ extension Parcel {
 extension UserParcelEntity {
     func toDomain() -> Parcel {
         return .init(
-            trackingNumber: trackingNumber!,
             deliveryCompanyId: deliveryCompanyId!,
+            trackingNumber: trackingNumber!,
             name: name!,
             state: ParcelState(rawValue: state!)!
         )

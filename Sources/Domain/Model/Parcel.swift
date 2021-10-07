@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct Parcel {
-    let trackingNumber: String
+struct Parcel: Equatable {
     let deliveryCompanyId: String
+    let trackingNumber: String
     let name: String
     let state: ParcelState
 }
