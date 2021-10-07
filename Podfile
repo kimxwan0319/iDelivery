@@ -19,6 +19,7 @@ target 'iDelivery' do
   pod 'Moya/RxSwift', '~> 15.0'
   pod 'RxTexture2', '1.3.0'
   pod 'RxFlow', '~> 2.12.0'
+  pod 'RxViewController', '~> 2.0.0'
 
   # D.I.
   pod 'Swinject', '~> 2.8.0'

@@ -37,6 +37,9 @@ PODS:
     - RxCocoa (~> 6.0)
     - RxSwift (~> 6.0)
     - Texture (~> 3.0)
+  - RxViewController (2.0.0):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
   - SwiftLint (0.44.0)
   - Swinject (2.8.0)
   - Texture (3.0.0):
@@ -69,6 +72,7 @@ DEPENDENCIES:
   - RxFlow (~> 2.12.0)
   - RxSwift (~> 6.2.0)
   - RxTexture2 (= 1.3.0)
+  - RxViewController (~> 2.0.0)
   - SwiftLint (~> 0.44.0)
   - Swinject (~> 2.8.0)
   - Texture (~> 3.0.0)
@@ -88,6 +92,7 @@ SPEC REPOS:
     - RxRelay
     - RxSwift
     - RxTexture2
+    - RxViewController
     - SwiftLint
     - Swinject
     - Texture
@@ -107,12 +112,13 @@ SPEC CHECKSUMS:
   RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
   RxTexture2: afc37076fc7ac380642d569533ed858d296732fe
+  RxViewController: 56486fa0afd629a1d6b5ba077f3b8cd9dc31b5d2
   SwiftLint: e96c0a8c770c7ebbc4d36c55baf9096bb65c4584
   Swinject: db795b8d6d78559b25fbebb0170d2635be1176e2
   Texture: 2f109e937850d94d1d07232041c9c7313ccddb81
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: d80176f65056cc929865d835ffaebca65c3e1526
+PODFILE CHECKSUM: 9ce6c901e85eba2914035b1778156c5c7a103cfa
 
 COCOAPODS: 1.10.2
