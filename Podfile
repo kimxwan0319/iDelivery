@@ -17,7 +17,8 @@ target 'iDelivery' do
   # Rx
   pod 'RxSwift', '~> 6.2.0'
   pod 'Moya/RxSwift', '~> 15.0'
-  pod 'RxTexture2', '1.3.0'
+  pod 'RxTexture2', '~> 1.3.0'
+  pod 'RxDataSources-Texture', '~> 1.4.0'
   pod 'RxFlow', '~> 2.12.0'
   pod 'RxViewController', '~> 2.0.0'
 
