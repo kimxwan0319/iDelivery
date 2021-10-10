@@ -8,9 +8,13 @@
 
 import ReactorKit
 import AsyncDisplayKit
+import Then
 import RxSwift
 import RxCocoa
 import RxFlow
+import RxTexture2
+import RxDataSources_Texture
+import RxViewController
 
 final class ParcelListNodeController: ASDKViewController<ASTableNode>, View {
 
@@ -18,18 +22,21 @@ final class ParcelListNodeController: ASDKViewController<ASTableNode>, View {
 
     var disposeBag = DisposeBag()
 
-    private let addPostButtonNode = UIBarButtonItem().then {
+    let dataSources = RxASTableSectionedReloadDataSource<SectionOfParcel>(
+        configureCellBlock: { _, _, _, parcel in
+            return { ParcelListCellNode(parcel: parcel) }
+        }
+    )
+
+    private let addParcelButtonNode = UIBarButtonItem().then {
         $0.image = UIImage(systemName: "plus")
     }
-
-    var items = ["", "", ""]
 
     override init() {
         super.init(node: ASTableNode(style: .plain))
         self.title = "배송목록"
-        self.navigationItem.rightBarButtonItem = addPostButtonNode
+        self.navigationItem.rightBarButtonItem = addParcelButtonNode
         self.node.backgroundColor = .systemBackground
-        self.node.dataSource = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -37,19 +44,29 @@ final class ParcelListNodeController: ASDKViewController<ASTableNode>, View {
     }
 
     func bind(reactor: Reactor) {
+        bindAction(reactor)
+        bindState(reactor)
     }
 }
 
-extension ParcelListNodeController: ASTableDataSource {
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return 1
+extension ParcelListNodeController {
+    private func bindAction(_ reactor: Reactor) {
+        self.rx.viewDidLoad
+            .map { Reactor.Action.viewDidLoad }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+
+        self.addParcelButtonNode.rx.tap
+            .map { Reactor.Action.tapPlusButton }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
     }
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        return items.count
-    }
-    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
-        return {
-            return ParcelListCellNode(state: "배송중", carrier: "CJ대한통운", number: "123412341234", title: "신발")
-        }
+
+    private func bindState(_ reactor: Reactor) {
+        reactor.state
+            .map { $0.parcelList }
+            .map { [SectionOfParcel(items: $0)] }
+            .bind(to: node.rx.items(dataSource: dataSources))
+            .disposed(by: disposeBag)
     }
 }
