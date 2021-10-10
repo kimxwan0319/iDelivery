@@ -24,8 +24,6 @@ class ParcelListReactor: Reactor, Stepper {
     var steps = PublishRelay<Step>()
     let initialState: State
 
-    private var deliveryCompanies = [DeliveryCompany]()
-
     // MARK: Action
     enum Action {
         case viewDidLoad
@@ -37,24 +35,30 @@ class ParcelListReactor: Reactor, Stepper {
 
     // MARK: Mutation
     enum Mutation {
-        case setList([Parcel])
+        case setParcelList([Parcel])
+        case setDeliveryCompanyList([DeliveryCompany])
         case synchronizeParcel(Parcel)
-        case appendList(Parcel)
-        case showRegisterParcelAlert([DeliveryCompany])
+        case appendParcelList(Parcel)
+        case showRegisterParcelAlert
         case setAlertMessage(String)
     }
 
     // MARK: State
     struct State {
         var parcelList: [Parcel]
-        var showRegisterParcelAlert: [DeliveryCompany]
-        var alertMessage: String?
+        var deliveryCompanyList: [DeliveryCompany]
+        var showAlert: AlertType?
+    }
+
+    enum AlertType {
+        case notification(message: String)
+        case registerParcel
     }
 
     init() {
         self.initialState = State(
             parcelList: [],
-            showRegisterParcelAlert: []
+            deliveryCompanyList: []
         )
      }
 
@@ -65,34 +69,35 @@ extension ParcelListReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
+            let deliveryCompanies = fetchDeliveryCompaniesUseCase.execute()
             let localUserParcels = fetchParcelListUseCase.execute()
             let stateCheckedUserParcels: Observable<Parcel> = localUserParcels
                 .asObservable()
                 .flatMap { parcels -> Observable<Parcel> in
                     return self.synchronizeParcelsState(parcels: parcels)
                 }
-            fetchDeliveryCompanies()
             return .concat([
-                localUserParcels.asObservable().map { .setList($0) },
+                deliveryCompanies.asObservable().map { .setDeliveryCompanyList($0) },
+                localUserParcels.asObservable().map { .setParcelList($0) },
                 stateCheckedUserParcels.map { .synchronizeParcel($0) }
                     .catch { _ in .just(.setAlertMessage("인터넷을 확인해주세요.")) }
             ])
 
         case .tapPlusButton:
-            return .just(.showRegisterParcelAlert(self.deliveryCompanies))
+            return .just(.showRegisterParcelAlert)
 
         case .registerParcel(let deliveryCompanyId, let trackingNumber, let name):
             return checkParcelStateUseCase.excute(
                 deliveryCompanyId: deliveryCompanyId,
                 trackingNumber: trackingNumber
             ).asObservable().map {
-                .appendList(Parcel(
+                .appendParcelList(Parcel(
                     deliveryCompanyId: deliveryCompanyId,
                     trackingNumber: trackingNumber,
                     name: name,
                     state: $0
                 ))
-            }.catch{ _ in .just(.setAlertMessage("없는 운송장 정보입니다.")) }
+            }.catch { _ in .just(.setAlertMessage("없는 운송장 정보입니다.")) }
 
         case .parcelIsPicked(let parcel):
             steps.accept(AppStep.parcelIsPicked(parcel: parcel))
@@ -103,13 +108,6 @@ extension ParcelListReactor {
             return .empty()
         }
 
-    }
-
-    private func fetchDeliveryCompanies() {
-        fetchDeliveryCompaniesUseCase.execute().subscribe(onSuccess: { [weak self] deliveryCompanies in
-            self?.deliveryCompanies = deliveryCompanies
-        })
-        .disposed(by: disposeBag)
     }
 
     private func synchronizeParcelsState(parcels: [Parcel]) -> Observable<Parcel> {
@@ -123,14 +121,17 @@ extension ParcelListReactor {
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         switch mutation {
-        case .setList(let parcels):
+        case .setParcelList(let parcels):
             newState.parcelList = parcels
 
-        case .appendList(let parcel):
+        case .setDeliveryCompanyList(let deliveryCompanies):
+            newState.deliveryCompanyList = deliveryCompanies
+
+        case .appendParcelList(let parcel):
             newState.parcelList.append(parcel)
 
-        case .showRegisterParcelAlert(let deliveryCompaies):
-            newState.showRegisterParcelAlert = deliveryCompaies
+        case .showRegisterParcelAlert:
+            newState.showAlert = .registerParcel
 
         case .synchronizeParcel(let parcel):
             let parcelIndex = newState.parcelList.firstIndex {
@@ -140,7 +141,7 @@ extension ParcelListReactor {
             newState.parcelList[parcelIndex] = parcel
 
         case .setAlertMessage(let message):
-            newState.alertMessage = message
+            newState.showAlert = .notification(message: message)
         }
         return newState
     }
