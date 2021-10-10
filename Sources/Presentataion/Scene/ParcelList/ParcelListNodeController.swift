@@ -34,9 +34,8 @@ final class ParcelListNodeController: ASDKViewController<ASTableNode>, View {
 
     override init() {
         super.init(node: ASTableNode(style: .plain))
-        self.title = "배송목록"
-        self.navigationItem.rightBarButtonItem = addParcelButtonNode
         self.node.backgroundColor = .systemBackground
+        self.setNavigationBar()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -46,6 +45,11 @@ final class ParcelListNodeController: ASDKViewController<ASTableNode>, View {
     func bind(reactor: Reactor) {
         bindAction(reactor)
         bindState(reactor)
+    }
+
+    private func setNavigationBar() {
+        self.title = "배송목록"
+        self.navigationItem.rightBarButtonItem = addParcelButtonNode
     }
 }
 
