@@ -41,16 +41,21 @@ class ParcelListReactor: Reactor, Stepper {
         case synchronizeParcel(Parcel)
         case appendList(Parcel)
         case showRegisterParcelAlert([DeliveryCompany])
+        case setAlertMessage(String)
     }
 
     // MARK: State
     struct State {
         var parcelList: [Parcel]
         var showRegisterParcelAlert: [DeliveryCompany]
+        var alertMessage: String?
     }
 
     init() {
-        self.initialState = State(parcelList: [], showRegisterParcelAlert: [])
+        self.initialState = State(
+            parcelList: [],
+            showRegisterParcelAlert: []
+        )
      }
 
 }
@@ -70,6 +75,7 @@ extension ParcelListReactor {
             return .concat([
                 localUserParcels.asObservable().map { .setList($0) },
                 stateCheckedUserParcels.map { .synchronizeParcel($0) }
+                    .catch { _ in .just(.setAlertMessage("인터넷을 확인해주세요.")) }
             ])
 
         case .tapPlusButton:
@@ -86,7 +92,7 @@ extension ParcelListReactor {
                     name: name,
                     state: $0
                 ))
-            }
+            }.catch{ _ in .just(.setAlertMessage("없는 운송장 정보입니다.")) }
 
         case .parcelIsPicked(let parcel):
             steps.accept(AppStep.parcelIsPicked(parcel: parcel))
@@ -133,6 +139,8 @@ extension ParcelListReactor {
             }!
             newState.parcelList[parcelIndex] = parcel
 
+        case .setAlertMessage(let message):
+            newState.alertMessage = message
         }
         return newState
     }
