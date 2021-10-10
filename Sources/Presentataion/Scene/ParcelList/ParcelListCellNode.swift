@@ -41,15 +41,15 @@ class ParcelListCellNode: ASCellNode {
     }
 
     // MARK: Initializing
-    init(state: String, carrier: String, number: String, title: String) {
+    init(parcel: Parcel) {
         super.init()
 
         self.automaticallyManagesSubnodes = true
         self.backgroundColor = .clear
 
-        self.stateTextNode.setString(state)
-        self.carrierTextNode.setString(carrier+" "+number)
-        self.titleTextNode.setString(title)
+        self.stateTextNode.setString(parcel.state.rawValue)
+        self.carrierTextNode.setString(parcel.deliveryCompanyId+" "+parcel.trackingNumber)
+        self.titleTextNode.setString(parcel.name)
     }
 
     // MARK: Layout
