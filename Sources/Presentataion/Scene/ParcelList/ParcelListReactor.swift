@@ -28,7 +28,7 @@ class ParcelListReactor: Reactor, Stepper {
     enum Action {
         case viewDidLoad
         case tapPlusButton
-        case registerParcel(deliveryCompany: String, trackingNumber: String, name: String)
+        case registerParcel(deliveryCompanyId: String, trackingNumber: String, name: String)
         case parcelIsPicked(parcel: Parcel)
         case deleteParcel(parcel: Parcel)
     }
