@@ -47,7 +47,7 @@ class ParcelListCellNode: ASCellNode {
         self.automaticallyManagesSubnodes = true
         self.backgroundColor = .clear
 
-        self.stateTextNode.setString(parcel.state.rawValue)
+        self.stateTextNode.setString(parcel.state.displayString())
         self.carrierTextNode.setString(parcel.deliveryCompanyId+" "+parcel.trackingNumber)
         self.titleTextNode.setString(parcel.name)
     }
