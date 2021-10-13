@@ -14,6 +14,6 @@ class FetchParcelListUseCase {
     @Inject private var userParcelsRepository: UserParcelsRepository
 
     func execute() -> Single<[Parcel]> {
-        return userParcelsRepository.fetchUserParcels()
+        return userParcelsRepository.fetchUserParcels().map { $0.reversed() }
     }
 }

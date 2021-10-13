@@ -128,7 +128,7 @@ extension ParcelListReactor {
             newState.deliveryCompanyList = deliveryCompanies
 
         case .appendParcelList(let parcel):
-            newState.parcelList.append(parcel)
+            newState.parcelList.insert(parcel, at: 0)
 
         case .showRegisterParcelAlert:
             newState.showAlert = .registerParcel
