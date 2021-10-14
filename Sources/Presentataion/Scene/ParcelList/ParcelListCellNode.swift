@@ -48,7 +48,7 @@ class ParcelListCellNode: ASCellNode {
         self.backgroundColor = .clear
 
         self.stateTextNode.setString(parcel.state.displayString())
-        self.carrierTextNode.setString(parcel.name+" "+parcel.trackingNumber)
+        self.carrierTextNode.setString(parcel.deliveryCompany.companyName+" "+parcel.trackingNumber)
         self.titleTextNode.setString(parcel.name)
     }
 
