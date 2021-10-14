@@ -15,7 +15,8 @@ extension Parcel {
     func toEntity(_ context: NSManagedObjectContext) -> UserParcelEntity {
         let entity: UserParcelEntity = .init(context: context)
         entity.trackingNumber = trackingNumber
-        entity.deliveryCompanyId = deliveryCompanyId
+        entity.deliveryCompanyId = deliveryCompany.companyId
+        entity.deliveryCompanyName = deliveryCompany.companyName
         entity.name = name
         entity.state = state.rawValue
         return entity
@@ -27,7 +28,10 @@ extension Parcel {
 extension UserParcelEntity {
     func toDomain() -> Parcel {
         return .init(
-            deliveryCompanyId: deliveryCompanyId!,
+            deliveryCompany: DeliveryCompany(
+                companyId: deliveryCompanyId!,
+                companyName: deliveryCompanyName!
+            ),
             trackingNumber: trackingNumber!,
             name: name!,
             state: ParcelState(rawValue: state!)!

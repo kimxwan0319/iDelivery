@@ -2,11 +2,12 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19206" systemVersion="20G165" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="UserParcelEntity" representedClassName="UserParcelEntity" syncable="YES" codeGenerationType="class">
         <attribute name="deliveryCompanyId" optional="YES" attributeType="String"/>
+        <attribute name="deliveryCompanyName" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="state" optional="YES" attributeType="String"/>
         <attribute name="trackingNumber" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="UserParcelEntity" positionX="-1588.26171875" positionY="-18" width="128" height="89"/>
+        <element name="UserParcelEntity" positionX="-1588.26171875" positionY="-18" width="128" height="118"/>
     </elements>
 </model>

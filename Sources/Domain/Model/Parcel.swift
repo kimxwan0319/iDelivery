@@ -9,7 +9,7 @@
 import Foundation
 
 struct Parcel: Equatable {
-    let deliveryCompanyId: String
+    let deliveryCompany: DeliveryCompany
     let trackingNumber: String
     let name: String
     let state: ParcelState

@@ -15,11 +15,11 @@ class SynchronizeParcelUseCase {
 
     func excute(parcel: Parcel) -> Single<Parcel> {
         return parcelInformationRepository.fetchParcelInfo(
-            deliveryCompanyId: parcel.deliveryCompanyId,
+            deliveryCompanyId: parcel.deliveryCompany.companyId,
             trackingNumber: parcel.trackingNumber
         ).map {
             Parcel(
-                deliveryCompanyId: parcel.deliveryCompanyId,
+                deliveryCompany: parcel.deliveryCompany,
                 trackingNumber: parcel.trackingNumber,
                 name: parcel.name,
                 state: $0.state
