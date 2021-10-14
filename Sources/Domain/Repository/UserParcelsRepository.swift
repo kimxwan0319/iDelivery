@@ -13,4 +13,5 @@ protocol UserParcelsRepository {
     func fetchUserParcels() -> Single<[Parcel]>
     func saveUserParcel(parcel: Parcel)
     func deleteUserParcel(parcel: Parcel)
+    func synchronizeUserParcel(parcel: Parcel)
 }

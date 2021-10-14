@@ -36,4 +36,20 @@ class DefaultUserParcelsRepository: UserParcelsRepository {
             do { try context.save() } catch { print(error.localizedDescription) }
         }
     }
+    func synchronizeUserParcel(parcel: Parcel) {
+        CoreData.shared.performBackgroundTask { context in
+            let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "UserParcelEntity")
+            fetchRequest.predicate = NSPredicate(
+                format: "deliveryCompanyId == %@ && trackingNumber == %@",
+                parcel.deliveryCompany.companyId, parcel.trackingNumber
+            )
+            do {
+                let result = try context.fetch(fetchRequest)[0] as? NSManagedObject
+                result?.setValue(parcel.state.rawValue, forKey: "state")
+                do { try context.save() } catch { print(error.localizedDescription) }
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
