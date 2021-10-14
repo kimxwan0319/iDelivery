@@ -12,6 +12,7 @@ import RxSwift
 class SynchronizeParcelUseCase {
 
     @Inject private var parcelInformationRepository: ParcelInformationRepository
+    @Inject private var userParcelsRepository: UserParcelsRepository
 
     func excute(parcel: Parcel) -> Single<Parcel> {
         return parcelInformationRepository.fetchParcelInfo(
@@ -24,6 +25,8 @@ class SynchronizeParcelUseCase {
                 name: parcel.name,
                 state: $0.state
             )
-        }
+        }.do(onSuccess: { [weak self] in
+            self?.userParcelsRepository.synchronizeUserParcel(parcel: $0)
+        })
     }
 }
