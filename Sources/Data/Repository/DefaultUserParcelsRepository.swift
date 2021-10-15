@@ -11,6 +11,9 @@ import RxSwift
 import CoreData
 
 class DefaultUserParcelsRepository: UserParcelsRepository {
+
+    private let disposeBag = DisposeBag()
+
     func fetchUserParcels() -> Single<[Parcel]> {
         return Single<[Parcel]>.create { single in
             CoreData.shared.performBackgroundTask { context in
@@ -37,19 +40,31 @@ class DefaultUserParcelsRepository: UserParcelsRepository {
         }
     }
     func synchronizeUserParcel(parcel: Parcel) {
-        CoreData.shared.performBackgroundTask { context in
-            let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "UserParcelEntity")
-            fetchRequest.predicate = NSPredicate(
-                format: "deliveryCompanyId == %@ && trackingNumber == %@",
-                parcel.deliveryCompany.companyId, parcel.trackingNumber
-            )
-            do {
-                let result = try context.fetch(fetchRequest)[0] as? NSManagedObject
-                result?.setValue(parcel.state.rawValue, forKey: "state")
+        fetchSpecificParcel(parcel: parcel).subscribe(onSuccess: { result in
+            CoreData.shared.performBackgroundTask { context in
+                result.setValue(parcel.state.rawValue, forKey: "state")
                 do { try context.save() } catch { print(error.localizedDescription) }
-            } catch {
-                print(error.localizedDescription)
             }
+        })
+        .disposed(by: disposeBag)
+    }
+
+    private func fetchSpecificParcel(parcel: Parcel) -> Single<NSManagedObject> {
+        return Single<NSManagedObject>.create { single in
+            CoreData.shared.performBackgroundTask { context in
+                let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "UserParcelEntity")
+                fetchRequest.predicate = NSPredicate(
+                    format: "deliveryCompanyId == %@ && trackingNumber == %@",
+                    parcel.deliveryCompany.companyId, parcel.trackingNumber
+                )
+                do {
+                    let result = try context.fetch(fetchRequest)[0] as? NSManagedObject
+                    single(.success(result!))
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+            return Disposables.create()
         }
     }
 }
