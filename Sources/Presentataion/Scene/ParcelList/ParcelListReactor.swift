@@ -24,13 +24,16 @@ class ParcelListReactor: Reactor, Stepper {
     var steps = PublishRelay<Step>()
     let initialState: State
 
+    private var userParcelList = [Parcel]()
+    public var deliveryCompanies = [DeliveryCompany]()
+
     // MARK: Action
     enum Action {
         case viewDidLoad
         case tapPlusButton
-        case registerParcel(deliveryCompanyId: String, trackingNumber: String, name: String)
-        case parcelIsPicked(parcel: Parcel)
-        case deleteParcel(parcel: Parcel)
+        case registerParcel(deliveryCompanyIndex: Int, trackingNumber: String, name: String)
+        case parcelIsPicked(parcelIndex: Int)
+        case deleteParcel(parcelIndex: Int)
     }
 
     // MARK: Mutation
@@ -39,6 +42,7 @@ class ParcelListReactor: Reactor, Stepper {
         case setDeliveryCompanyList([DeliveryCompany])
         case synchronizeParcel(Parcel)
         case appendParcelList(Parcel)
+        case deleteParcelItem(Int)
         case showRegisterParcelAlert
         case setAlertMessage(String)
     }
@@ -69,16 +73,22 @@ extension ParcelListReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            let deliveryCompanies = fetchDeliveryCompaniesUseCase.execute()
             let localUserParcels = fetchParcelListUseCase.execute()
+                .do(onSuccess: { [weak self] in
+                    self?.userParcelList = $0
+                })
+            let deliveryCompanies = fetchDeliveryCompaniesUseCase.execute()
+                .do(onSuccess: { [weak self] in
+                    self?.deliveryCompanies = $0
+                })
             let stateCheckedUserParcels: Observable<Parcel> = localUserParcels
                 .asObservable()
                 .flatMap { parcels -> Observable<Parcel> in
                     return self.synchronizeParcelsState(parcels: parcels)
                 }
             return .concat([
-                deliveryCompanies.asObservable().map { .setDeliveryCompanyList($0) },
                 localUserParcels.asObservable().map { .setParcelList($0) },
+                deliveryCompanies.asObservable().map { .setDeliveryCompanyList($0) },
                 stateCheckedUserParcels.map { .synchronizeParcel($0) }
                     .catch { _ in .just(.setAlertMessage("인터넷을 확인해주세요.")) }
             ])
@@ -86,25 +96,33 @@ extension ParcelListReactor {
         case .tapPlusButton:
             return .just(.showRegisterParcelAlert)
 
-        case .registerParcel(let deliveryCompanyId, let trackingNumber, let name):
+        case .registerParcel(let deliveryCompanyIndex, let trackingNumber, let name):
             return checkParcelStateUseCase.excute(
-                deliveryCompanyId: deliveryCompanyId,
+                deliveryCompanyId: deliveryCompanies[deliveryCompanyIndex].companyId,
                 trackingNumber: trackingNumber
-            ).asObservable().map {
-                .appendParcelList(Parcel(
-                    deliveryCompanyId: deliveryCompanyId,
-                    trackingNumber: trackingNumber,
-                    name: name,
-                    state: $0
-                ))
-            }.catch { _ in .just(.setAlertMessage("없는 운송장 정보입니다.")) }
+            ).asObservable()
+                .map { [weak self] in
+                    Parcel(
+                        deliveryCompany: self?.deliveryCompanies[deliveryCompanyIndex] ??
+                        DeliveryCompany(companyId: "", companyName: ""),
+                        trackingNumber: trackingNumber,
+                        name: name,
+                        state: $0
+                    )
+                }
+                .do(onNext: { [weak self] in
+                    self?.saveParcelUseCase.execute(userParcel: $0)
+                })
+                .map { .appendParcelList($0) }
+                .catch { _ in .just(.setAlertMessage("없는 운송장 정보입니다.")) }
 
-        case .parcelIsPicked(let parcel):
-            steps.accept(AppStep.parcelIsPicked(parcel: parcel))
-            return .empty()
+        case .deleteParcel(let parcelIndex):
+            deleteParcelUseCase.execute(userParcel: self.userParcelList[parcelIndex])
+            userParcelList.remove(at: parcelIndex)
+            return Observable.just(.deleteParcelItem(parcelIndex))
 
-        case .deleteParcel(let parcel):
-            deleteParcelUseCase.execute(userParcel: parcel)
+        case .parcelIsPicked(let parcelIndex):
+            steps.accept(AppStep.parcelIsPicked(parcel: self.userParcelList[parcelIndex]))
             return .empty()
         }
 
@@ -130,12 +148,15 @@ extension ParcelListReactor {
         case .appendParcelList(let parcel):
             newState.parcelList.insert(parcel, at: 0)
 
+        case .deleteParcelItem(let index):
+            newState.parcelList.remove(at: index)
+
         case .showRegisterParcelAlert:
             newState.showAlert = .registerParcel
 
         case .synchronizeParcel(let parcel):
             let parcelIndex = newState.parcelList.firstIndex {
-                $0.deliveryCompanyId == parcel.deliveryCompanyId &&
+                $0.deliveryCompany == parcel.deliveryCompany &&
                 $0.trackingNumber == parcel.trackingNumber
             }!
             newState.parcelList[parcelIndex] = parcel
