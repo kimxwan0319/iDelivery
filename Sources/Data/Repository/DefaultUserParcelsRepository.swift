@@ -34,37 +34,38 @@ class DefaultUserParcelsRepository: UserParcelsRepository {
         }
     }
     func deleteUserParcel(parcel: Parcel) {
-        CoreData.shared.performBackgroundTask { context in
-            context.delete(parcel.toEntity(context))
-            do { try context.save() } catch { print(error.localizedDescription) }
+        CoreData.shared.performBackgroundTask { [weak self] context in
+            let request = self?.fetchRequest(parcel: parcel)
+            do {
+                if let result = try context.fetch(request!).first {
+                    context.delete(result)
+                    do { try context.save() } catch { print(error.localizedDescription) }
+                }
+            } catch {
+                print(error)
+            }
         }
     }
     func synchronizeUserParcel(parcel: Parcel) {
-        fetchSpecificParcel(parcel: parcel).subscribe(onSuccess: { result in
-            CoreData.shared.performBackgroundTask { context in
-                result.setValue(parcel.state.rawValue, forKey: "state")
-                do { try context.save() } catch { print(error.localizedDescription) }
+        CoreData.shared.performBackgroundTask { [weak self] context in
+            let request = self?.fetchRequest(parcel: parcel)
+            do {
+                if let result = try context.fetch(request!).first {
+                    result.setValue(parcel.state.rawValue, forKey: "state")
+                    do { try context.save() } catch { print(error.localizedDescription) }
+                }
+            } catch {
+                print(error)
             }
-        })
-        .disposed(by: disposeBag)
+        }
     }
 
-    private func fetchSpecificParcel(parcel: Parcel) -> Single<NSManagedObject> {
-        return Single<NSManagedObject>.create { single in
-            CoreData.shared.performBackgroundTask { context in
-                let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "UserParcelEntity")
-                fetchRequest.predicate = NSPredicate(
-                    format: "deliveryCompanyId == %@ && trackingNumber == %@",
-                    parcel.deliveryCompany.companyId, parcel.trackingNumber
-                )
-                do {
-                    let result = try context.fetch(fetchRequest)[0] as? NSManagedObject
-                    single(.success(result!))
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
-            return Disposables.create()
-        }
+    private func fetchRequest(parcel: Parcel) -> NSFetchRequest<UserParcelEntity> {
+        let request: NSFetchRequest = UserParcelEntity.fetchRequest()
+        request.predicate = NSPredicate(
+            format: "deliveryCompanyId == %@ && trackingNumber == %@",
+            parcel.deliveryCompany.companyId, parcel.trackingNumber
+        )
+        return request
     }
 }
