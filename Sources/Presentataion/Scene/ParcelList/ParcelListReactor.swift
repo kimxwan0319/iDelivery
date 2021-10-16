@@ -73,15 +73,10 @@ extension ParcelListReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            let stateCheckedUserParcels: Observable<Parcel> = fetchLocalUserParcels()
-                .asObservable()
-                .flatMap { parcels -> Observable<Parcel> in
-                    return self.synchronizeParcelsState(parcels: parcels)
-                }
             return .concat([
                 fetchLocalUserParcels().asObservable().map { .setParcelList($0) },
                 fetchDeliveryCompanies().asObservable().map { .setDeliveryCompanyList($0) },
-                stateCheckedUserParcels.map { .synchronizeParcel($0) }
+                synchronizeParcelsState().map { .synchronizeParcel($0) }
                     .catch { _ in .just(.setAlertMessage("인터넷을 확인해주세요.")) }
             ])
 
@@ -132,9 +127,13 @@ extension ParcelListReactor {
                 self?.deliveryCompanies = $0
             })
     }
-    private func synchronizeParcelsState(parcels: [Parcel]) -> Observable<Parcel> {
-        let singles = parcels.map { synchronizeParcelUseCase.excute(parcel: $0) }
-        return Observable.from(singles).merge()
+    private func synchronizeParcelsState() -> Observable<Parcel> {
+        return fetchLocalUserParcels()
+            .asObservable()
+            .flatMap { parcels -> Observable<Parcel> in
+                let singles = parcels.map { self.synchronizeParcelUseCase.excute(parcel: $0) }
+                return Observable.from(singles).merge()
+            }
     }
 }
 
