@@ -25,8 +25,8 @@ class SynchronizeParcelUseCase {
                 name: parcel.name,
                 state: $0.state
             )
-        }.do(onSuccess: { [weak self] in
-            self?.userParcelsRepository.synchronizeUserParcel(parcel: $0)
+        }.do(onSuccess: {
+            self.userParcelsRepository.synchronizeUserParcel(parcel: $0)
         })
     }
 }
