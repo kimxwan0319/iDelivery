@@ -6,10 +6,18 @@
 //  Copyright © 2021 com.kimxwan0319. All rights reserved.
 //
 
+import ReactorKit
 import AsyncDisplayKit
 import Then
+import RxSwift
+import RxCocoa
 
-class ParcelDetailNodeController: ASDKViewController<ASTableNode> {
+class ParcelDetailNodeController: ASDKViewController<ASTableNode>, View {
+
+    typealias Reactor = ParcelDetailReactor
+
+    var disposeBag = DisposeBag()
+
     var items = ["", "", ""]
 
     override init() {
@@ -23,6 +31,11 @@ class ParcelDetailNodeController: ASDKViewController<ASTableNode> {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func bind(reactor: ParcelDetailReactor) {
+        bindAction(reactor)
+        bindState(reactor)
     }
 }
 
@@ -42,5 +55,13 @@ extension ParcelDetailNodeController: ASTableDataSource {
                 discription: "discription"
             )
         }
+    }
+}
+
+extension ParcelDetailNodeController {
+    private func bindAction(_ reactor: Reactor) {
+    }
+
+    private func bindState(_ reactor: Reactor) {
     }
 }
