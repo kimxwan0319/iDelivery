@@ -88,17 +88,16 @@ extension ParcelListReactor {
                 deliveryCompanyId: deliveryCompanies[deliveryCompanyIndex].companyId,
                 trackingNumber: trackingNumber
             ).asObservable()
-                .map { [weak self] in
+                .map {
                     Parcel(
-                        deliveryCompany: self?.deliveryCompanies[deliveryCompanyIndex] ??
-                        DeliveryCompany(companyId: "", companyName: ""),
+                        deliveryCompany: self.deliveryCompanies[deliveryCompanyIndex],
                         trackingNumber: trackingNumber,
                         name: name,
                         state: $0
                     )
                 }
-                .do(onNext: { [weak self] in
-                    self?.saveParcelUseCase.execute(userParcel: $0)
+                .do(onNext: {
+                    self.saveParcelUseCase.execute(userParcel: $0)
                 })
                 .map { .appendParcelList($0) }
                 .catch { _ in .just(.setAlertMessage("없는 운송장 정보입니다.")) }
@@ -117,14 +116,14 @@ extension ParcelListReactor {
 
     private func fetchLocalUserParcels() -> Single<[Parcel]> {
         return fetchParcelListUseCase.execute()
-            .do(onSuccess: { [weak self] in
-                self?.userParcelList = $0
+            .do(onSuccess: {
+                self.userParcelList = $0
             })
     }
     private func fetchDeliveryCompanies() -> Single<[DeliveryCompany]> {
         return fetchDeliveryCompaniesUseCase.execute()
-            .do(onSuccess: { [weak self] in
-                self?.deliveryCompanies = $0
+            .do(onSuccess: {
+                self.deliveryCompanies = $0
             })
     }
     private func synchronizeParcelsState() -> Observable<Parcel> {
