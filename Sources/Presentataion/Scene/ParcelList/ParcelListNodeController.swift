@@ -139,13 +139,10 @@ extension ParcelListNodeController {
             }
             .disposed(by: disposeBag)
 
-        reactor.state
-            .map { $0.alert }
+        reactor.pulse(\.$alert)
             .compactMap { $0 }
             .subscribe(onNext: { [weak self] in
                 switch $0 {
-                case .notShown:
-                    break
                 case .notification(let message):
                     self?.showAlert(message)
                 case .registerParcel:

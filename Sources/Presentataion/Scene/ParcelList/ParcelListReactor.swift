@@ -42,7 +42,6 @@ class ParcelListReactor: Reactor, Stepper {
         case synchronizeParcel(Parcel)
         case appendParcelList(Parcel)
         case deleteParcelItem(Int)
-        case hideAlert
         case showRegisterParcelAlert
         case setAlertMessage(String)
     }
@@ -51,11 +50,10 @@ class ParcelListReactor: Reactor, Stepper {
     struct State {
         var parcelList: [Parcel]
         var deliveryCompanyList: [DeliveryCompany]
-        var alert: AlertType
+        @Pulse var alert: AlertType?
     }
 
     enum AlertType {
-        case notShown
         case notification(message: String)
         case registerParcel
     }
@@ -63,8 +61,7 @@ class ParcelListReactor: Reactor, Stepper {
     init() {
         self.initialState = State(
             parcelList: [],
-            deliveryCompanyList: [],
-            alert: .notShown
+            deliveryCompanyList: []
         )
      }
 
@@ -85,16 +82,13 @@ extension ParcelListReactor {
             return .just(.showRegisterParcelAlert)
 
         case .registerParcel(let deliveryCompanyIndex, let trackingNumber, let name):
-            return .concat([
-                .just(.hideAlert),
-                registerParcel(
-                    deliveryCompanyIndex: deliveryCompanyIndex,
-                    trackingNumber: trackingNumber,
-                    name: name
-                )
-                    .map { .appendParcelList($0) }
-                    .catch { _ in .just(.setAlertMessage("없는 운송장 정보입니다.")) }
-            ])
+            return registerParcel(
+                deliveryCompanyIndex: deliveryCompanyIndex,
+                trackingNumber: trackingNumber,
+                name: name
+            )
+                .map { .appendParcelList($0) }
+                .catch { _ in .just(.setAlertMessage("없는 운송장 정보입니다.")) }
 
         case .deleteParcel(let parcelIndex):
             deleteParcelUseCase.execute(userParcel: self.userParcelList[parcelIndex])
@@ -159,9 +153,6 @@ extension ParcelListReactor {
 
         case .deleteParcelItem(let index):
             newState.parcelList.remove(at: index)
-
-        case .hideAlert:
-            newState.alert = .notShown
 
         case .showRegisterParcelAlert:
             newState.alert = .registerParcel
