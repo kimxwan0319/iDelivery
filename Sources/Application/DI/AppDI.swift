@@ -43,7 +43,7 @@ extension Container {
         }
         self.register(ParcelDetailNodeController.self) { resolver in
             let controller = ParcelDetailNodeController()
-            // controller.reactor = resolver.resolve(ParcelDetailReactor.self)
+            controller.reactor = resolver.resolve(ParcelDetailReactor.self)
             return controller
         }
     }
