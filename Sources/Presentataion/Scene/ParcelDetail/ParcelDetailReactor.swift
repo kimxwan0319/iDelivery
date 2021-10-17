@@ -14,7 +14,7 @@ class ParcelDetailReactor: Reactor {
 
     private let disposeBag = DisposeBag()
     let initialState: State
-    
+
     // MARK: Action
     enum Action {
     }
@@ -22,9 +22,13 @@ class ParcelDetailReactor: Reactor {
     // MARK: Mutation
     enum Mutation {
     }
-    
+
     // MARK: State
-    enum State {
+    struct State {
+    }
+
+    init() {
+        self.initialState = State()
     }
 }
 
