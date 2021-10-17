@@ -43,6 +43,7 @@ class ParcelListReactor: Reactor, Stepper {
         case synchronizeParcel(Parcel)
         case appendParcelList(Parcel)
         case deleteParcelItem(Int)
+        case hideAlert
         case showRegisterParcelAlert
         case setAlertMessage(String)
     }
@@ -55,6 +56,7 @@ class ParcelListReactor: Reactor, Stepper {
     }
 
     enum AlertType {
+        case notShown
         case notification(message: String)
         case registerParcel
     }
@@ -62,7 +64,8 @@ class ParcelListReactor: Reactor, Stepper {
     init() {
         self.initialState = State(
             parcelList: [],
-            deliveryCompanyList: []
+            deliveryCompanyList: [],
+            alert: .notShown
         )
      }
 
@@ -151,6 +154,9 @@ extension ParcelListReactor {
 
         case .deleteParcelItem(let index):
             newState.parcelList.remove(at: index)
+
+        case .hideAlert:
+            newState.alert = .notShown
 
         case .showRegisterParcelAlert:
             newState.alert = .registerParcel
