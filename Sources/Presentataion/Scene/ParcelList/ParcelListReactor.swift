@@ -51,7 +51,7 @@ class ParcelListReactor: Reactor, Stepper {
     struct State {
         var parcelList: [Parcel]
         var deliveryCompanyList: [DeliveryCompany]
-        var showAlert: AlertType?
+        var alert: AlertType
     }
 
     enum AlertType {
@@ -153,7 +153,7 @@ extension ParcelListReactor {
             newState.parcelList.remove(at: index)
 
         case .showRegisterParcelAlert:
-            newState.showAlert = .registerParcel
+            newState.alert = .registerParcel
 
         case .synchronizeParcel(let parcel):
             let parcelIndex = newState.parcelList.firstIndex {
@@ -163,7 +163,7 @@ extension ParcelListReactor {
             newState.parcelList[parcelIndex] = parcel
 
         case .setAlertMessage(let message):
-            newState.showAlert = .notification(message: message)
+            newState.alert = .notification(message: message)
         }
         return newState
     }
