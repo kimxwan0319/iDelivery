@@ -38,6 +38,8 @@ class ParcelListFlow: Flow {
         ))
     }
     private func navigateToParcelInfoScreen(parcel: Parcel) -> FlowContributors {
+        @Inject var parcelDetailNodeController: ParcelDetailNodeController
+        self.rootViewController.pushViewController(parcelDetailNodeController, animated: true)
         return .none
     }
 }
