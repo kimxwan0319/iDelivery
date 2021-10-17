@@ -15,9 +15,8 @@ class ParcelListReactor: Reactor, Stepper {
 
     @Inject private var fetchParcelListUseCase: FetchParcelListUseCase
     @Inject private var synchronizeParcelUseCase: SynchronizeParcelUseCase
-    @Inject private var saveParcelUseCase: SaveParcelUseCase
+    @Inject private var registerParcelUseCase: RegisterParcelUseCase
     @Inject private var deleteParcelUseCase: DeleteParcelUseCase
-    @Inject private var checkParcelStateUseCase: CheckParcelStateUseCase
     @Inject private var fetchDeliveryCompaniesUseCase: FetchDeliveryCompaniesUseCase
 
     private let disposeBag = DisposeBag()
@@ -86,23 +85,16 @@ extension ParcelListReactor {
             return .just(.showRegisterParcelAlert)
 
         case .registerParcel(let deliveryCompanyIndex, let trackingNumber, let name):
-            return checkParcelStateUseCase.excute(
-                deliveryCompanyId: deliveryCompanies[deliveryCompanyIndex].companyId,
-                trackingNumber: trackingNumber
-            ).asObservable()
-                .map {
-                    Parcel(
-                        deliveryCompany: self.deliveryCompanies[deliveryCompanyIndex],
-                        trackingNumber: trackingNumber,
-                        name: name,
-                        state: $0
-                    )
-                }
-                .do(onNext: {
-                    self.saveParcelUseCase.execute(userParcel: $0)
-                })
-                .map { .appendParcelList($0) }
-                .catch { _ in .just(.setAlertMessage("없는 운송장 정보입니다.")) }
+            return .concat([
+                .just(.hideAlert),
+                registerParcel(
+                    deliveryCompanyIndex: deliveryCompanyIndex,
+                    trackingNumber: trackingNumber,
+                    name: name
+                )
+                    .map { .appendParcelList($0) }
+                    .catch { _ in .just(.setAlertMessage("없는 운송장 정보입니다.")) }
+            ])
 
         case .deleteParcel(let parcelIndex):
             deleteParcelUseCase.execute(userParcel: self.userParcelList[parcelIndex])
@@ -135,6 +127,19 @@ extension ParcelListReactor {
                 let singles = parcels.map { self.synchronizeParcelUseCase.excute(parcel: $0) }
                 return Observable.from(singles).merge()
             }
+    }
+    private func registerParcel(
+        deliveryCompanyIndex: Int,
+        trackingNumber: String,
+        name: String
+    ) -> Observable<Parcel> {
+        return registerParcelUseCase.excute(
+            deliveryCompany: deliveryCompanies[deliveryCompanyIndex],
+            trackingNumber: trackingNumber,
+            name: name
+        ).do(onNext: {
+            self.userParcelList.insert($0, at: 0)
+        })
     }
 }
 
