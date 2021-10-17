@@ -24,7 +24,6 @@ extension Container {
 
     private func registerUseCases() {
         self.register(FetchDeliveryCompaniesUseCase.self) { _ in FetchDeliveryCompaniesUseCase() }
-        self.register(SaveParcelUseCase.self) { _ in SaveParcelUseCase() }
         self.register(DeleteParcelUseCase.self) { _ in DeleteParcelUseCase() }
         self.register(FetchParcelListUseCase.self) { _ in FetchParcelListUseCase() }
         self.register(FetchParcelInformationUseCase.self) { _ in FetchParcelInformationUseCase() }
