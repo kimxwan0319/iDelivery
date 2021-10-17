@@ -77,7 +77,6 @@ extension ParcelListReactor {
                 fetchLocalUserParcels().asObservable().map { .setParcelList($0) },
                 fetchDeliveryCompanies().asObservable().map { .setDeliveryCompanyList($0) },
                 synchronizeParcelsState().map { .synchronizeParcel($0) }
-                    .catch { _ in .just(.setAlertMessage("인터넷을 확인해주세요.")) }
             ])
 
         case .tapPlusButton:
