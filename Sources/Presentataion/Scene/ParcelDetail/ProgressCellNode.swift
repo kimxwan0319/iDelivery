@@ -15,42 +15,30 @@ class ProgressCellNode: ASCellNode {
 
     // MARK: UI
     private let dateTextNode = ASTextNode().then {
-        $0.attributedText = NSAttributedString(
-            string: " ",
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 10),
-                .foregroundColor: UIColor.lightGray
-            ]
+        $0.setAttribute(
+            font: .systemFont(ofSize: 10),
+            color: .lightGray
         )
     }
     private let timeTextNode = ASTextNode().then {
-        $0.attributedText = NSAttributedString(
-            string: " ",
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 20),
-                .foregroundColor: UIColor.label
-            ]
+        $0.setAttribute(
+            font: .systemFont(ofSize: 20),
+            color: .label
         )
     }
     private let lineImageNode = ASImageNode().then {
         $0.contentMode = .scaleAspectFit
     }
     private let locationTextNode = ASTextNode().then {
-        $0.attributedText = NSAttributedString(
-            string: " ",
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 20),
-                .foregroundColor: UIColor.label
-            ]
+        $0.setAttribute(
+            font: .systemFont(ofSize: 20),
+            color: .label
         )
     }
     private let discriptionTextNode = ASTextNode().then {
-        $0.attributedText = NSAttributedString(
-            string: " ",
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 13),
-                .foregroundColor: UIColor.label
-            ]
+        $0.setAttribute(
+            font: .systemFont(ofSize: 13),
+            color: .label
         )
     }
 
