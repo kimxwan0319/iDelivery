@@ -13,30 +13,21 @@ class ParcelListCellNode: ASCellNode {
 
     // MARK: UI
     private let stateTextNode = ASTextNode().then {
-        $0.attributedText = NSAttributedString(
-            string: " ",
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 25),
-                .foregroundColor: UIColor.link
-            ]
+        $0.setAttribute(
+            font: .systemFont(ofSize: 25),
+            color: .link
         )
     }
     private let carrierTextNode = ASTextNode().then {
-        $0.attributedText = NSAttributedString(
-            string: " ",
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 10),
-                .foregroundColor: UIColor.lightGray
-            ]
+        $0.setAttribute(
+            font: .systemFont(ofSize: 10),
+            color: .lightGray
         )
     }
     private let titleTextNode = ASTextNode().then {
-        $0.attributedText = NSAttributedString(
-            string: " ",
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 20),
-                .foregroundColor: UIColor.label
-            ]
+        $0.setAttribute(
+            font: .systemFont(ofSize: 20),
+            color: .label
         )
     }
 
