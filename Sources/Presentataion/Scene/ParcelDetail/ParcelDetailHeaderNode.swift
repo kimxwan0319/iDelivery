@@ -12,47 +12,71 @@ import Then
 class ParcelDetailHeaderNode: ASDisplayNode {
 
     // MARK: UI
-    private let stateProgressNode = UIProgressView()
+    private let stateProgressNode = ASDisplayNode(viewBlock: { () -> UIProgressView in
+        return UIProgressView()
+    })
     private let stateTextNode = ASTextNode().then {
-        $0.attributedText = NSAttributedString(
-            string: " ",
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 45),
-                .foregroundColor: UIColor.link
-            ]
+        $0.setAttribute(
+            font: .systemFont(ofSize: 45),
+            color: .link
         )
     }
-    private let titleTextNode = ASTextNode().then {
-        $0.attributedText = NSAttributedString(
-            string: " ",
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 20),
-                .foregroundColor: UIColor.label
-            ]
+    private let deliveryCompanyTextNode = ASTextNode().then {
+        $0.setAttribute(
+            font: .systemFont(ofSize: 20),
+            color: .label
         )
     }
-    private let carrierTextNode = ASTextNode().then {
-        $0.attributedText = NSAttributedString(
-            string: " ",
-            attributes: [
-                .font: UIFont.systemFont(ofSize: 15),
-                .foregroundColor: UIColor.lightGray
-            ]
+    private let trackingNumberTextNode = ASTextNode().then {
+        $0.setAttribute(
+            font: .systemFont(ofSize: 15),
+            color: .lightGray
         )
     }
+    private let senderAndReceiverDisplayNode = SenderAndReceiverDisplayNode()
 
     // MARK: Initializing
     override init() {
         super.init()
-        self.bounds = CGRect(x: 0, y: 0, width: (supernode?.view.frame.size.width) ?? 0, height: 300)
+        self.bounds = CGRect(x: 0, y: 0, width: (supernode?.view.frame.size.width) ?? 0, height: 250)
         self.automaticallyManagesSubnodes = true
         self.automaticallyRelayoutOnSafeAreaChanges = true
-        self.backgroundColor = .cyan
+        // DemoData
+        stateTextNode.setString("배송완료");
+        deliveryCompanyTextNode.setString("CJ대한통운");
+        trackingNumberTextNode.setString("363568234234");
+        setProgress(percent: 50);
+    }
+
+    private func setProgress(percent: Int) {
+        (self.stateProgressNode.view as? UIProgressView)?.setProgress(Float(percent/100), animated: true)
     }
 
     // MARK: Layout
     override func layoutSpecThatFits(_ constraintedSize: ASSizeRange) -> ASLayoutSpec {
-        return ASLayoutSpec()
+        return ASStackLayoutSpec(
+            direction: .vertical,
+            spacing: 50,
+            justifyContent: .start,
+            alignItems: .stretch,
+            children: [
+                stateProgressNode,
+                parcelInfoLayoutSpec(),
+                senderAndReceiverDisplayNode
+            ]
+        )
     }
-
+    private func parcelInfoLayoutSpec() -> ASLayoutSpec {
+        return ASStackLayoutSpec(
+            direction: .vertical,
+            spacing: 5,
+            justifyContent: .center,
+            alignItems: .center,
+            children: [
+                self.stateTextNode,
+                self.deliveryCompanyTextNode,
+                self.trackingNumberTextNode
+            ]
+        )
+    }
 }

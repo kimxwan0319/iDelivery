@@ -17,16 +17,26 @@ class ParcelDetailNodeController: ASDKViewController<ASTableNode>, View {
     typealias Reactor = ParcelDetailReactor
 
     var disposeBag = DisposeBag()
+    private let headerNode = ParcelDetailHeaderNode()
 
-    var items = ["", "", ""]
+    let demoParcel = Parcel(
+        deliveryCompany: DeliveryCompany(
+            companyId: "",
+            companyName: ""
+        ),
+        trackingNumber: "",
+        name: "",
+        state: .atPickup
+    );
+    var items = ["", "", ""];
 
     override init() {
         super.init(node: ASTableNode(style: .plain))
         self.node.backgroundColor = .systemBackground
         self.node.dataSource = self
         self.node.view.separatorStyle = .none
-        self.node.view.allowsSelection = false
-        // self.node.view.tableHeaderView = PostInfoHeaderNode().view
+        self.node.view.tableHeaderView = headerNode.view
+        self.headerNode.automaticallyRelayoutOnSafeAreaChanges = true
     }
 
     required init?(coder aDecoder: NSCoder) {
