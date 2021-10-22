@@ -9,7 +9,11 @@
 import AsyncDisplayKit
 
 class ASLineNode: ASDisplayNode {
-    enum Direction { case vertical; case horizontal }
+    enum Direction {
+        case vertical
+        case horizontal
+    }
+
     init(direction: Direction, color: UIColor, width: CGFloat) {
         super.init()
         self.backgroundColor = color
