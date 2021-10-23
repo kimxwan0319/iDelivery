@@ -96,12 +96,12 @@ extension ParcelListNodeController {
         self.rx.viewDidLoad
             .map { Reactor.Action.viewDidLoad }
             .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
 
         self.addParcelButtonNode.rx.tap
             .map { Reactor.Action.tapPlusButton }
             .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
 
         self.registerParcel
             .map { Reactor.Action.registerParcel(
