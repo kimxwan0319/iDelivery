@@ -1,11 +1,12 @@
 //
 //  Tests.swift
-//  Tests
+//  iDelivery
 //
 //  Created by 김수완 on 2021/10/06.
 //
 
 import XCTest
+import Nimble
 @testable import iDelivery
 
 class Tests: XCTestCase {
