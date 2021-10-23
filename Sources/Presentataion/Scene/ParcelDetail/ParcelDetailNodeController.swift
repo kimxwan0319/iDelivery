@@ -11,6 +11,9 @@ import AsyncDisplayKit
 import Then
 import RxSwift
 import RxCocoa
+import RxTexture2
+import RxDataSources_Texture
+import RxViewController
 
 class ParcelDetailNodeController: ASDKViewController<ASTableNode>, View {
 
@@ -19,21 +22,21 @@ class ParcelDetailNodeController: ASDKViewController<ASTableNode>, View {
     var disposeBag = DisposeBag()
     private let headerNode = ParcelDetailHeaderNode()
 
-    let demoParcel = Parcel(
-        deliveryCompany: DeliveryCompany(
-            companyId: "",
-            companyName: ""
-        ),
-        trackingNumber: "",
-        name: "",
-        state: .atPickup
-    );
-    var items = ["", "", ""];
+    private var progressCount: Int = 0
+    lazy var dataSources = RxASTableSectionedReloadDataSource<SectionOfProgress>(
+        configureCellBlock: { _, _, indexPath, progress in
+            return {
+                let cellNode = ProgressCellNode(progress: progress)
+                cellNode.setImage(self.lineImageSelect(index: indexPath.row))
+                return cellNode
+            }
+        }
+    )
 
     override init() {
         super.init(node: ASTableNode(style: .plain))
+        self.navigationItem.largeTitleDisplayMode = .never
         self.node.backgroundColor = .systemBackground
-        self.node.dataSource = self
         self.node.view.separatorStyle = .none
         self.node.view.tableHeaderView = headerNode.view
         self.headerNode.automaticallyRelayoutOnSafeAreaChanges = true
@@ -47,31 +50,55 @@ class ParcelDetailNodeController: ASDKViewController<ASTableNode>, View {
         bindAction(reactor)
         bindState(reactor)
     }
-}
 
-extension ParcelDetailNodeController: ASTableDataSource {
-    func numberOfSections(in tableNode: ASTableNode) -> Int {
-        return 1
-    }
-    func tableNode(_ tableNode: ASTableNode, numberOfRowsInSection section: Int) -> Int {
-        return items.count
-    }
-    func tableNode(_ tableNode: ASTableNode, nodeBlockForRowAt indexPath: IndexPath) -> ASCellNodeBlock {
-        return {
-            return ProgressCellNode(
-                dateStr: "0000 - 00 - 00",
-                timeStr: "00 : 00",
-                location: "location",
-                discription: "discription"
-            )
-        }
+    private func lineImageSelect(index: Int) -> ASImageNode.State {
+        if progressCount == 1 {
+            return .only
+        } else if index == 0 {
+            return .start
+        } else if index == progressCount - 1 {
+            return .end
+        } else { return .middle }
     }
 }
 
 extension ParcelDetailNodeController {
     private func bindAction(_ reactor: Reactor) {
+        self.rx.viewWillAppear
+            .map { _ in Reactor.Action.viewWillAppear }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 
     private func bindState(_ reactor: Reactor) {
+        reactor.state
+            .map { $0.basicParcelInfo }
+            .map { $0.name }
+            .bind(to: self.navigationItem.rx.title)
+            .disposed(by: disposeBag)
+
+        reactor.state
+            .map { $0.basicParcelInfo }
+            .subscribe(onNext: { [weak self] in
+                self?.headerNode.setData(parcel: $0)
+            })
+            .disposed(by: disposeBag)
+
+        reactor.state
+            .map { $0.senderAndReceiver }
+            .subscribe(onNext: { [weak self] in
+                self?.headerNode.setSenderAndReceiver(
+                    sender: $0.sender,
+                    receiver: $0.receiver
+                )
+            })
+            .disposed(by: disposeBag)
+
+        reactor.state
+            .map { $0.parcelProgress }
+            .do(onNext: { self.progressCount = $0.count })
+            .map { [SectionOfProgress(items: $0)] }
+            .bind(to: node.rx.items(dataSource: dataSources))
+            .disposed(by: disposeBag)
     }
 }

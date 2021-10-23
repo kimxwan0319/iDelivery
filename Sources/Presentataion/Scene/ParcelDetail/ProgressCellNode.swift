@@ -35,7 +35,9 @@ class ProgressCellNode: ASCellNode {
             color: .label
         )
     }
-    private let discriptionTextNode = ASTextNode().then {
+    private let descriptionTextNode = ASTextNode().then {
+        $0.maximumNumberOfLines = 0
+        $0.truncationMode = .byTruncatingTail
         $0.setAttribute(
             font: .systemFont(ofSize: 13),
             color: .label
@@ -43,17 +45,19 @@ class ProgressCellNode: ASCellNode {
     }
 
     // MARK: Initializing
-    init(dateStr: String, timeStr: String, location: String, discription: String) {
+    init(progress: ParcelInformation.Progress) {
         super.init()
 
         self.automaticallyManagesSubnodes = true
         self.backgroundColor = .clear
 
-        self.dateTextNode.setString(dateStr)
-        self.timeTextNode.setString(timeStr)
-        self.locationTextNode.setString(location)
-        self.discriptionTextNode.setString(discription)
-        self.lineImageNode.image = .State.only
+        self.dateTextNode.setString(progress.dateString())
+        self.timeTextNode.setString(progress.timeString())
+        self.locationTextNode.setString(progress.location)
+        self.descriptionTextNode.setString(progress.description)
+    }
+    public func setImage(_ state: ASImageNode.State) {
+        self.lineImageNode.setLineImage(state: state)
     }
 
     // MARK: Layout
@@ -72,13 +76,13 @@ class ProgressCellNode: ASCellNode {
             alignItems: .stretch,
             children: [
                 self.dateTimeLayoutSpec().styled {
-                    $0.flexBasis = ASDimension(unit: .fraction, value: 0.2)
+                    $0.flexBasis = ASDimension(unit: .fraction, value: 0.15)
                 },
                 self.imageLayoutSpec().styled {
                     $0.flexBasis = ASDimension(unit: .fraction, value: 0.05)
                 },
-                self.locationDiscriptionLayoutSpec().styled {
-                    $0.flexBasis = ASDimension(unit: .fraction, value: 0.75)
+                self.locationDescriptionLayoutSpec().styled {
+                    $0.flexBasis = ASDimension(unit: .fraction, value: 0.8)
                 }
             ]
         )
@@ -98,15 +102,15 @@ class ProgressCellNode: ASCellNode {
     private func imageLayoutSpec() -> ASLayoutSpec {
         return ASRatioLayoutSpec(ratio: 4, child: self.lineImageNode)
     }
-    private func locationDiscriptionLayoutSpec() -> ASLayoutSpec {
+    private func locationDescriptionLayoutSpec() -> ASLayoutSpec {
         return ASStackLayoutSpec(
             direction: .vertical,
             spacing: 0,
             justifyContent: .center,
-            alignItems: .start,
+            alignItems: .stretch,
             children: [
                 self.locationTextNode,
-                self.discriptionTextNode
+                self.descriptionTextNode
             ]
         )
     }

@@ -50,10 +50,11 @@ class SenderAndReceiverDisplayNode: ASDisplayNode {
     override init() {
         super.init()
         self.automaticallyManagesSubnodes = true
+    }
 
-        // Demodata
-        self.senderTextNode.setString("김수완");
-        self.receiverTextNode.setString("이서준");
+    public func setSenderAndReceiver(sender: String, receiver: String) {
+        self.senderTextNode.setString(sender)
+        self.receiverTextNode.setString(receiver)
     }
 
     // MARK: Layout

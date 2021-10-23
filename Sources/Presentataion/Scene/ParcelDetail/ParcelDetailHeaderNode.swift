@@ -41,11 +41,19 @@ class ParcelDetailHeaderNode: ASDisplayNode {
         self.bounds = CGRect(x: 0, y: 0, width: (supernode?.view.frame.size.width) ?? 0, height: 250)
         self.automaticallyManagesSubnodes = true
         self.automaticallyRelayoutOnSafeAreaChanges = true
-        // DemoData
-        stateTextNode.setString("배송완료");
-        deliveryCompanyTextNode.setString("CJ대한통운");
-        trackingNumberTextNode.setString("363568234234");
-        setProgress(percent: 50);
+    }
+
+    public func setData(parcel: Parcel) {
+        stateTextNode.setString(parcel.state.displayString())
+        deliveryCompanyTextNode.setString(parcel.deliveryCompany.companyName)
+        trackingNumberTextNode.setString(parcel.trackingNumber)
+        setProgress(percent: parcel.state.progressPercent())
+    }
+    public func setSenderAndReceiver(sender: String, receiver: String) {
+        senderAndReceiverDisplayNode.setSenderAndReceiver(sender: sender, receiver: receiver)
+    }
+    public func changeParcelState(state: ParcelState) {
+        self.stateTextNode.setString(state.displayString())
     }
 
     private func setProgress(percent: Int) {

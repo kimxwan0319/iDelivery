@@ -41,9 +41,8 @@ extension Container {
             controller.reactor = resolver.resolve(ParcelListReactor.self)
             return controller
         }
-        self.register(ParcelDetailNodeController.self) { resolver in
+        self.register(ParcelDetailNodeController.self) { _ in
             let controller = ParcelDetailNodeController()
-            controller.reactor = resolver.resolve(ParcelDetailReactor.self)
             return controller
         }
     }
