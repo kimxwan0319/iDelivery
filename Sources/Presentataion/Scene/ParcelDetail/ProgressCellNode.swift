@@ -36,7 +36,7 @@ class ProgressCellNode: ASCellNode {
         )
     }
     private let descriptionTextNode = ASTextNode().then {
-        $0.maximumNumberOfLines = 0
+        $0.maximumNumberOfLines = 2
         $0.truncationMode = .byTruncatingTail
         $0.setAttribute(
             font: .systemFont(ofSize: 13),
@@ -50,6 +50,7 @@ class ProgressCellNode: ASCellNode {
 
         self.automaticallyManagesSubnodes = true
         self.backgroundColor = .clear
+        self.selectionStyle = .none
 
         self.dateTextNode.setString(progress.dateString())
         self.timeTextNode.setString(progress.timeString())
@@ -71,18 +72,18 @@ class ProgressCellNode: ASCellNode {
     private func contentLayoutSpec() -> ASLayoutSpec {
         return ASStackLayoutSpec(
             direction: .horizontal,
-            spacing: 15.0,
+            spacing: 8,
             justifyContent: .start,
             alignItems: .stretch,
             children: [
                 self.dateTimeLayoutSpec().styled {
-                    $0.flexBasis = ASDimension(unit: .fraction, value: 0.15)
+                    $0.preferredSize.width = 60
                 },
                 self.imageLayoutSpec().styled {
                     $0.flexBasis = ASDimension(unit: .fraction, value: 0.05)
                 },
                 self.locationDescriptionLayoutSpec().styled {
-                    $0.flexBasis = ASDimension(unit: .fraction, value: 0.8)
+                    $0.flexShrink = 1.0
                 }
             ]
         )
