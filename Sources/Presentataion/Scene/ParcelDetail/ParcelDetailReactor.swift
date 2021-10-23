@@ -74,7 +74,7 @@ extension ParcelDetailReactor {
         var newState = state
         switch mutation {
         case .setParcelInformation(let parcelInformation):
-            newState.parcelProgress = parcelInformation.progesses
+            newState.parcelProgress = parcelInformation.progesses.reversed()
             newState.senderAndReceiver = (
                 parcelInformation.sender,
                 parcelInformation.receiver
