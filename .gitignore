@@ -71,3 +71,9 @@ Tuist/Dependencies
 
 ### CocoaPods ###
 Pods/
+
+### Swift specific ###
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
