@@ -93,8 +93,8 @@ final class ParcelListNodeController: ASDKViewController<ASTableNode>, View {
 
 extension ParcelListNodeController {
     private func bindAction(_ reactor: Reactor) {
-        self.rx.viewDidLoad
-            .map { Reactor.Action.viewDidLoad }
+        self.rx.viewWillAppear
+            .map { _ in Reactor.Action.viewWillAppear }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
 
