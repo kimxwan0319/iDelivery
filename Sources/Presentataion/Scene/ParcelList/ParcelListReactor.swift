@@ -28,7 +28,7 @@ class ParcelListReactor: Reactor, Stepper {
 
     // MARK: Action
     enum Action {
-        case viewDidLoad
+        case viewWillAppear
         case tapPlusButton
         case registerParcel(deliveryCompanyIndex: Int, trackingNumber: String, name: String)
         case parcelIsPicked(parcelIndex: Int)
@@ -71,7 +71,7 @@ class ParcelListReactor: Reactor, Stepper {
 extension ParcelListReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .viewDidLoad:
+        case .viewWillAppear:
             return .concat([
                 fetchLocalUserParcels().asObservable().map { .setParcelList($0) },
                 fetchDeliveryCompanies().asObservable().map { .setDeliveryCompanyList($0) },

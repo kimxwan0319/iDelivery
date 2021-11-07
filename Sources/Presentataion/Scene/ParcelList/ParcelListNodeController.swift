@@ -38,7 +38,7 @@ final class ParcelListNodeController: ASDKViewController<ASTableNode>, View {
         preferredStyle: .alert
     ).then { alert in
         alert.addTextField { nameTextField in
-            nameTextField.placeholder = "이름"
+            nameTextField.placeholder = "택배 이름 (선택)"
         }
         alert.addTextField { deliveryCompanyNameTextField in
             deliveryCompanyNameTextField.placeholder = "택배 회사"
@@ -93,8 +93,8 @@ final class ParcelListNodeController: ASDKViewController<ASTableNode>, View {
 
 extension ParcelListNodeController {
     private func bindAction(_ reactor: Reactor) {
-        self.rx.viewDidLoad
-            .map { Reactor.Action.viewDidLoad }
+        self.rx.viewWillAppear
+            .map { _ in Reactor.Action.viewWillAppear }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
 
