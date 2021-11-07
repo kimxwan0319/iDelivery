@@ -38,7 +38,7 @@ final class ParcelListNodeController: ASDKViewController<ASTableNode>, View {
         preferredStyle: .alert
     ).then { alert in
         alert.addTextField { nameTextField in
-            nameTextField.placeholder = "이름"
+            nameTextField.placeholder = "택배 이름 (선택)"
         }
         alert.addTextField { deliveryCompanyNameTextField in
             deliveryCompanyNameTextField.placeholder = "택배 회사"
