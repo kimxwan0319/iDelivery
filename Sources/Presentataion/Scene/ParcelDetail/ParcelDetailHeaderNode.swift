@@ -57,7 +57,7 @@ class ParcelDetailHeaderNode: ASDisplayNode {
     }
 
     private func setProgress(percent: Int) {
-        (self.stateProgressNode.view as? UIProgressView)?.setProgress(Float(percent/100), animated: true)
+        (self.stateProgressNode.view as? UIProgressView)?.setProgress(Float(percent)/100, animated: true)
     }
 
     // MARK: Layout
