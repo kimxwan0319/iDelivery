@@ -40,7 +40,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let url = URLContexts.first?.url else { return }
-        print(url)
+        print(propertiesToParcelData(url: url))
+    }
+
+    private func propertiesToParcelData(url: URL) -> Parcel {
+        let components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+        let items = components?.queryItems ?? []
+        return Parcel(
+            deliveryCompany: DeliveryCompany(
+                companyId: items[0].value!,
+                companyName: items[1].value!
+            ),
+            trackingNumber: items[2].value!,
+            name: items[3].value!,
+            state: ParcelState(rawValue: items[4].value!)!
+        )
     }
 
 }
