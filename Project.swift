@@ -21,9 +21,7 @@ let project = Project(
                     name: "SwiftLint"
                 )
             ],
-            dependencies: [
-                .cocoapods(path: ".")
-            ],
+            dependencies: [],
             coreDataModels: [
                 CoreDataModel(
                     Path("Sources/Data/CoreData/CoreData.xcdatamodeld"),
