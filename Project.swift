@@ -15,31 +15,17 @@ let project = Project(
             resources: [
                 "Resources/**"
             ],
-            actions: [
-                TargetAction.pre(
+            scripts: [
+                .pre(
                     script: "${PODS_ROOT}/SwiftLint/swiftlint",
                     name: "SwiftLint"
                 )
             ],
-            dependencies: [
-                .cocoapods(path: ".")
-            ],
+            dependencies: [],
             coreDataModels: [
                 CoreDataModel(
                     Path("Sources/Data/CoreData/CoreData.xcdatamodeld"),
                     currentVersion: nil)
-            ]
-        ),
-        Target(
-            name: "iDeliveryTests",
-            platform: .iOS,
-            product: .unitTests,
-            bundleId: "com.kimxwan0319.iDeliveryTests",
-            infoPlist: .default,
-            sources: ["Tests/**"],
-            dependencies: [
-                .target(name: "iDelivery"),
-                .cocoapods(path: ".")
             ]
         )
     ]
