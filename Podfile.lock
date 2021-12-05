@@ -6,7 +6,6 @@ PODS:
   - Moya/RxSwift (15.0.0):
     - Moya/Core
     - RxSwift (~> 6.0)
-  - Nimble (9.2.1)
   - PINCache (3.0.3):
     - PINCache/Arc-exception-safe (= 3.0.3)
     - PINCache/Core (= 3.0.3)
@@ -73,7 +72,6 @@ PODS:
 
 DEPENDENCIES:
   - Moya/RxSwift (~> 15.0)
-  - Nimble
   - ReactorKit (~> 3.1.0)
   - RxDataSources-Texture (~> 1.4.0)
   - RxFlow (~> 2.12.0)
@@ -90,7 +88,6 @@ SPEC REPOS:
     - Alamofire
     - Differentiator
     - Moya
-    - Nimble
     - PINCache
     - PINOperation
     - PINRemoteImage
@@ -112,7 +109,6 @@ SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
-  Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
   PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
   PINRemoteImage: f1295b29f8c5e640e25335a1b2bd9d805171bd01
@@ -130,6 +126,6 @@ SPEC CHECKSUMS:
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 810db8921fcd3a40a56041bdab9f3d9936bdcc7e
+PODFILE CHECKSUM: 76fcd249896254b9a90cdb5a5e0da594d34f629a
 
 COCOAPODS: 1.11.2
